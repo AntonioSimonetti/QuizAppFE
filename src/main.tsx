@@ -4,6 +4,9 @@ import './index.css'
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import App from './App'
+import "@fontsource/dm-sans"; // DM Sans
+import "@fontsource/roboto-condensed"; // Roboto Condensed
+
 
 const rootElement = document.getElementById('root') as HTMLElement;
 
@@ -13,6 +16,6 @@ if (rootElement) {
       <Provider store={store}>
         <App />
       </Provider>
-    </StrictMode>,
+    </StrictMode>
   );
 }

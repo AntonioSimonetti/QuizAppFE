@@ -1,8 +1,12 @@
 import './App.css';
+import SignInPage from './components/SignInPage';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 function App() {
   return (
-    <h1>"H1"</h1>
+    <SignInPage/>
   );
 }
 

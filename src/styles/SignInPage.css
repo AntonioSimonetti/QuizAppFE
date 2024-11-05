@@ -1,0 +1,48 @@
+.Main-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /*border: 2px solid rgb(157, 72, 72);
+    background-color: rgb(56, 56, 171);*/
+    padding: 4rem;
+}
+
+
+.Top-div {
+    width: 190px;
+    height: 36px;
+    background-color: #252525;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Top-div > p {
+    font-size: 14px;
+    line-height: 24px;
+    color: rgb(234, 234, 234, 0.5);
+    text-align: center;
+    font-weight: 400;
+}
+
+.Main-div h1 {
+    font-family: "DM Sans";
+    font-weight: 400;
+    font-size: 32px;
+}
+
+.Para-Call {
+    font-size: 14px;
+    text-align: center;
+    color: rgb(234, 234, 234, 0.5);
+    margin-top: -1rem;
+}
+
+.Line {
+    width: 290px;
+    height: 2px; 
+    background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55)); 
+}
+
