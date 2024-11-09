@@ -103,10 +103,6 @@
     margin-top: 16px;
 }
 
-.Input-wrapper-none {
-    display: none;
-}
-
 .Input-wrapper > input {
     width: 266px;
     height: 51px;

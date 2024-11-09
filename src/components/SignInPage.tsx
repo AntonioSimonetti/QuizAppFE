@@ -2,9 +2,36 @@ import "../styles/SignInPage.css";
 import googleLogo from '../assets/google-logo.svg';
 import githubLogo from '../assets/github-logo.svg';
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { SignUp, SignIn } from "../services/authentication";
 
 const SignInPage = () => {
     const [login, setLogin] = useState(true);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    //emailin use // validationError // loader?
+
+    const dispatch = useDispatch();
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        
+            try {
+
+                console.log("email, password: ", email, password);
+
+                const data = login
+                    ? await SignIn(dispatch, { email, password })
+                    : await SignUp(dispatch, { email, password });
+                
+                console.log("Response data: ", data);        
+            } catch(error){
+                console.log("errore durante l'autenticazione", error)
+            }
+        
+    }
 
     return (
         
@@ -34,13 +61,15 @@ const SignInPage = () => {
                     </div>
                     <div className="Gray-line"></div>
                 </div>
-                <form className="Sign-in-form">
+                <form className="Sign-in-form" onSubmit={handleSubmit}>
                     <div className="Input-wrapper">
                     <input
                         type="email"
                         id="email"
                         name="email"
                         placeholder="email"
+                        value ={email}
+                        onChange={(event) => setEmail(event.target.value || '')}
                     />
                     </div>
                     <div className="Input-wrapper">
@@ -49,17 +78,23 @@ const SignInPage = () => {
                         id="password"
                         name="password"
                         placeholder="password"
+                        value ={password}
+                        onChange={(event) => setPassword(event.target.value || '')}
                     />
                     </div>
-                    <div className={`Input-wrapper ${login ? "Input-wrapper-none" : ""}`}>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="confirm password"
-                    />
+                    {!login && (
+                    <div className="Input-wrapper">
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="confirm password"
+                            value={confirmPassword}
+                            onChange={(event) => setConfirmPassword(event.target.value)}
+                        />
                     </div>
-                    <button className="Submit-btn">
+                    )}
+                    <button type="submit" className="Submit-btn">
                         {login ? "Sign in" : "Sign up"}
                     </button>
                 </form>

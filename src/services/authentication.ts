@@ -41,14 +41,16 @@ export const generateConfirmationLink = async(email:string) => {
 export const SignUp = async (dispatch: AppDispatch, credentials: Credentials) => {
     try {
 
+        console.log("credentials: ", credentials)
         // Check if email is already in use
+        /*
         const emailCheck = await checkEmailInUse(credentials.email);
 
         if(emailCheck.isEmailInUse) {
             const error = new Error("Email is already in use.");
             //error.response = { status: 400, data: "Email is already in use."}; definirò una classe specifica estendendo la classe base error? 
             throw error;
-        }
+        }*/
 
         const { data } = await axiosInstance.post("/register", credentials);
 
@@ -68,5 +70,25 @@ export const SignUp = async (dispatch: AppDispatch, credentials: Credentials) =>
             console.error("An unexpected error occurred", error);
         }
         throw error;
+    }
+}
+
+export const SignIn = async (dispatch: AppDispatch, credentials: Credentials) => {
+    try {
+        const { data } = await axiosInstance.post("/login", credentials);
+
+        const userIdResponse = await axiosInstance.get("/api/user/userid", {
+            headers: {
+                Authorization: `Bearer ${data.accessToken}` 
+            }
+        });
+
+        const userId = userIdResponse.data.userId;
+
+        dispatch(userAuthenticated({...data, userId}))
+        console.log("data: ", data);
+        return data; // mi serve qui?
+    } catch (error){
+        console.log("Error! ", error); 
     }
 }
