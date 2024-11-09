@@ -45,4 +45,139 @@
     background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55)); 
 }
 
+.Login-btn-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap:16px;
+    min-width: 290px;
+    min-height: 288px;   
+}
 
+.Google-div, .Github-div {
+    border-radius: 16px;
+    width: 72px;
+    height: 44px;
+    background-color: #252525;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    fill: #EAEAEA !important;     
+    opacity: 0.75 !important;
+}
+
+.Gray-lines-div{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.Gray-line {
+    width: 120px;
+    height: 1px; 
+    background: #eaeaea25; 
+}
+
+.Or-div {
+    font-size: 12px;
+    color: #eaeaea25;
+}
+
+.Or-div > p {
+    margin-bottom: 10px;
+}
+
+.Sign-in-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap:10px;
+    margin-top: 16px;
+}
+
+.Input-wrapper-none {
+    display: none;
+}
+
+.Input-wrapper > input {
+    width: 266px;
+    height: 51px;
+    border-radius: 16px;
+    border-color: #80808075;
+    box-shadow: none;
+    border:1px solid #eaeaea75;
+    padding-left: 11px;
+    background-color: #151515;
+}
+
+/* Rimuovono lo stile di autocomplentamento dei browser */
+.Input-wrapper > input:-webkit-autofill {
+    background-color: none;
+    color: none;
+  }
+  
+.Input-wrapper > input::placeholder {
+    font-family: "Roboto Condensed";
+    font-size: 16px;
+    color: #eaeaea25;
+}
+
+input:-webkit-autofill {
+    background-color: transparent !important;
+    font-size: 16px !important;
+}
+
+/* Imposto una transizione lunga per forzare la rimozione del background azzurro di autofill del browser */
+input:-webkit-autofill {
+    transition: background-color 5000s ease-in-out 0s; 
+    font-size: 16px !important;
+}
+
+.Submit-btn {
+    width: 286px;
+    height: 55px;
+    border-radius: 16px;
+    border: none;
+    background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55)); 
+    box-shadow: none;
+    font-size: 16px !important;
+    color: #121212;
+    margin-top: 38px;
+    cursor: pointer;
+}
+
+.Bottom-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Log-in-div {
+    width: 40px;
+    height: 24px;
+    background-color:#252525;
+    border: 1px solid #80808075;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    margin-left: 5px;
+}
+
+.p-div > p {
+    color: #eaeaea25;
+}
+
+.Log-in-div > p{
+   font-size: 12px !important;
+   color:#eaeaea75 ;
+   cursor: pointer;
+}
