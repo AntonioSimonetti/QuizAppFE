@@ -4,7 +4,7 @@ import { AuthState, initialState } from "../types/authTypes";
 // Forse lo sposto da qui dopo
 interface AuthPayload {
     accessToken: string;
-    emailConfirmationLink?: string; 
+    email?: string; 
     userId: string;
     usernameAndEmail: string;
 }
@@ -17,7 +17,7 @@ export const authenticationSlice = createSlice({
             localStorage.setItem("token", action.payload.accessToken);
             state.token = action.payload.accessToken;
             state.isLoggedIn = true;
-            state.emailConfirmationLink = action.payload.emailConfirmationLink || "";
+            state.email = action.payload.email || "";
             state.userId = action.payload.userId;
             state.usernameAndEmail = action.payload.usernameAndEmail;
         },
@@ -25,7 +25,7 @@ export const authenticationSlice = createSlice({
             localStorage.clear();
             state.token = "";
             state.isLoggedIn = false;
-            state.emailConfirmationLink = "";
+            state.email = "";
             state.userId = "";
             state.usernameAndEmail = "";
         },

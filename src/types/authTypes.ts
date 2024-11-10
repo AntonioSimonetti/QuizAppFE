@@ -1,7 +1,7 @@
 export interface AuthState {
     token: string;
     isLoggedIn: boolean;
-    emailConfirmationLink: string;
+    email: string;
     userId: string;
     usernameAndEmail: string;
 }
@@ -11,7 +11,7 @@ export interface AuthState {
 export const initialState: AuthState = {
     token: "",
     isLoggedIn: false,
-    emailConfirmationLink: "",
+    email: "",
     userId: "",
     usernameAndEmail: ""
 }

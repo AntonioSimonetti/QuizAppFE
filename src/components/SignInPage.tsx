@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { SignUp, SignIn } from "../services/authentication";
 
 const SignInPage = () => {
-    const [login, setLogin] = useState(true);
+    const [login, setLogin] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -111,3 +111,7 @@ const SignInPage = () => {
 }
 
 export default SignInPage;
+
+
+//ri implementare check email in use nel signup
+//implementare validation

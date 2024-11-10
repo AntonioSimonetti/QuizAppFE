@@ -46,7 +46,7 @@ export const SignUp = async (dispatch: AppDispatch, credentials: Credentials) =>
         /*
         const emailCheck = await checkEmailInUse(credentials.email);
 
-        if(emailCheck.isEmailInUse) {
+        if(emailCheck.isEmailInUse) { // da rimettere
             const error = new Error("Email is already in use.");
             //error.response = { status: 400, data: "Email is already in use."}; definirò una classe specifica estendendo la classe base error? 
             throw error;
@@ -75,20 +75,34 @@ export const SignUp = async (dispatch: AppDispatch, credentials: Credentials) =>
 
 export const SignIn = async (dispatch: AppDispatch, credentials: Credentials) => {
     try {
+        // Chiamata per il login
         const { data } = await axiosInstance.post("/login", credentials);
 
-        const userIdResponse = await axiosInstance.get("/api/user/userid", {
+        // Verifica il contenuto di data
+        console.log("Login response data:", data);
+
+        const userDataResponse = await axiosInstance.get("/api/user/profile", {
             headers: {
-                Authorization: `Bearer ${data.accessToken}` 
+                Authorization: `Bearer ${data.accessToken}`
             }
         });
 
-        const userId = userIdResponse.data.userId;
+        const { id, email } = userDataResponse.data;
 
-        dispatch(userAuthenticated({...data, userId}))
-        console.log("data: ", data);
-        return data; // mi serve qui?
-    } catch (error){
-        console.log("Error! ", error); 
+        if (!id || !email) {
+            throw new Error("User data is incomplete or missing.");
+        }
+
+        dispatch(userAuthenticated({...data, userId: id, email}))
+
+        // Ritorna semplicemente data per la validazione di login
+        return data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.error("Axios error during SignIn:", error.message);
+        } else {
+            console.error("Unexpected error during SignIn:", error);
+        }
+        throw error; // Rilancia l'errore per una gestione successiva
     }
-}
+};
