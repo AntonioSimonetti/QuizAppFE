@@ -20,7 +20,7 @@ const SignInPage = () => {
         
             try {
 
-                console.log("email, password: ", email, password);
+               // console.log("email, password: ", email, password);
 
                 const data = login
                     ? await SignIn(dispatch, { email, password })
@@ -112,6 +112,7 @@ const SignInPage = () => {
 
 export default SignInPage;
 
-
+//Scrivere l'endpoint checkEmailIsAlreadyInUse
 //ri implementare check email in use nel signup
-//implementare validation
+//implementare validation??dove?
+

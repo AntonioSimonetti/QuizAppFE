@@ -41,12 +41,13 @@ export const generateConfirmationLink = async(email:string) => {
 export const SignUp = async (dispatch: AppDispatch, credentials: Credentials) => {
     try {
 
-        console.log("credentials: ", credentials)
+        //console.log("credentials: ", credentials)
         // Check if email is already in use
+        
         /*
         const emailCheck = await checkEmailInUse(credentials.email);
 
-        if(emailCheck.isEmailInUse) { // da rimettere
+        if(emailCheck.isEmailInUse) { 
             const error = new Error("Email is already in use.");
             //error.response = { status: 400, data: "Email is already in use."}; definirò una classe specifica estendendo la classe base error? 
             throw error;
