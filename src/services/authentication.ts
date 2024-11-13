@@ -1,6 +1,7 @@
 import axios from "axios";
 import { userAuthenticated } from "../store/authenticationSlice";
 import { AppDispatch } from "../store/store";
+import { logout as logoutAction } from "../store/authenticationSlice"
 
 // Da decidere dove mettere dopo
 interface Credentials {
@@ -41,21 +42,10 @@ export const generateConfirmationLink = async(email:string) => {
 export const SignUp = async (dispatch: AppDispatch, credentials: Credentials) => {
     try {
 
-        //console.log("credentials: ", credentials)
-        // Check if email is already in use
-        
-        /*
-        const emailCheck = await checkEmailInUse(credentials.email);
-
-        if(emailCheck.isEmailInUse) { 
-            const error = new Error("Email is already in use.");
-            //error.response = { status: 400, data: "Email is already in use."}; definirò una classe specifica estendendo la classe base error? 
-            throw error;
-        }*/
-
         const { data } = await axiosInstance.post("/register", credentials);
 
         // Da controllare se ho bisogno di passare tutti questi dati qui
+        localStorage.setItem("token", data.accessToken);
 
         const email = credentials.email;
         const linkesponse = await generateConfirmationLink(email); // probabilmente non mi servirà
@@ -93,6 +83,8 @@ export const SignIn = async (dispatch: AppDispatch, credentials: Credentials) =>
         if (!id || !email) {
             throw new Error("User data is incomplete or missing.");
         }
+        
+        localStorage.setItem("token", data.accessToken);
 
         dispatch(userAuthenticated({...data, userId: id, email}))
 
@@ -107,3 +99,8 @@ export const SignIn = async (dispatch: AppDispatch, credentials: Credentials) =>
         throw error; // Rilancia l'errore per una gestione successiva
     }
 };
+
+export const logout = (dispatch: AppDispatch) => {
+    localStorage.removeItem("token")
+    dispatch(logoutAction());
+}

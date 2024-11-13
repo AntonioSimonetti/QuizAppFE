@@ -17,9 +17,9 @@ export const authenticationSlice = createSlice({
             localStorage.setItem("token", action.payload.accessToken);
             state.token = action.payload.accessToken;
             state.isLoggedIn = true;
-            state.email = action.payload.email || "";
+            state.email = action.payload.email || state.email;
             state.userId = action.payload.userId;
-            state.usernameAndEmail = action.payload.usernameAndEmail;
+            state.usernameAndEmail = action.payload.usernameAndEmail || state.usernameAndEmail;
         },
         logout: (state: AuthState) => {
             localStorage.clear();

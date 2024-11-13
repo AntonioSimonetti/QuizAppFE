@@ -14,6 +14,7 @@ const SignInPage = () => {
     //emailin use // validationError // loader?
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -26,7 +27,8 @@ const SignInPage = () => {
                     ? await SignIn(dispatch, { email, password })
                     : await SignUp(dispatch, { email, password });
                 
-                console.log("Response data: ", data);        
+                console.log("Response data: ", data);   
+                navigate("/");     
             } catch(error){
                 console.log("errore durante l'autenticazione", error)
             }
