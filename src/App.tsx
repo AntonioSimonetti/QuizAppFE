@@ -24,7 +24,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={isLoggedIn ? <Homepage /> : <Navigate to="/signin" />} />
-        <Route path="/signup" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} />
+        <Route path="/signup" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} /> {/*  queste rotte da rivedere*/} 
         <Route path="/signin" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} />
       </Routes>
     </Router>
