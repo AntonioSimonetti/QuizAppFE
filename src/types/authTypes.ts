@@ -4,6 +4,7 @@ export interface AuthState {
     email: string;
     userId: string;
     usernameAndEmail: string;
+    valid: boolean;
 }
 
 // Initial state
@@ -13,5 +14,6 @@ export const initialState: AuthState = {
     isLoggedIn: false,
     email: "",
     userId: "",
-    usernameAndEmail: ""
+    usernameAndEmail: "",
+    valid: false
 }
