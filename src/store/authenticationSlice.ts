@@ -7,12 +7,10 @@ interface AuthPayload {
     email?: string; 
     userId: string;
     usernameAndEmail: string;
+    valid: boolean;
 }
 
-// Anche questo forse lo sposto
-interface TokenValidationPayload {
-    isValid: boolean; 
-}
+
 
 export const authenticationSlice = createSlice({
     name: "authentication",
@@ -25,6 +23,7 @@ export const authenticationSlice = createSlice({
             state.email = action.payload.email || state.email;
             state.userId = action.payload.userId;
             state.usernameAndEmail = action.payload.usernameAndEmail || state.usernameAndEmail;
+            state.valid = action.payload.valid;
         },
         logout: (state: AuthState) => {
             localStorage.clear();
@@ -38,20 +37,10 @@ export const authenticationSlice = createSlice({
         emailConfirmed: (state: AuthState) => {
             state.isLoggedIn = false;
         },
-        tokenValidationStatus: (state: AuthState, action: PayloadAction<TokenValidationPayload>) => {
-            // Si potrebbe mettere una funzione helper
-            state.isLoggedIn = action.payload.isValid; 
-            if (!action.payload.isValid) {
-                localStorage.clear(); 
-                state.token = "";
-                state.email = "";
-                state.userId = "";
-                state.usernameAndEmail = "";
-            }
-        }
+   
     }
 });
 
-export const { userAuthenticated, logout, emailConfirmed, tokenValidationStatus  } = authenticationSlice.actions;
+export const { userAuthenticated, logout, emailConfirmed  } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer; //export solo del riduttore 
