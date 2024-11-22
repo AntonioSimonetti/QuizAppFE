@@ -13,55 +13,6 @@ const axiosInstance = axios.create({
     baseURL:"https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/"
 })
 
-// validate token
-/*
-export const validateToken = async (dispatch: AppDispatch, getState: Function) => {
-    try {
-        const token = localStorage.getItem("token");
-
-        if (!token) {
-            console.error("No token found in localStorage.");
-            throw new Error("No token found in localStorage.");
-        }
-
-        // Chiamata all'API per validare il token
-        const response = await axiosInstance.get("/api/Token/ValidateToken", {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-
-        if (response.status === 200) {
-            const currentState = getState();
-
-            const { email, userId, usernameAndEmail } = currentState.authentication; 
-
-            // Dispatch solo aggiornando il campo `valid` senza sovrascrivere gli altri valori
-            dispatch(userAuthenticated({
-                accessToken: token,            
-                valid: true,                   
-                userId: userId || "",       
-                usernameAndEmail: usernameAndEmail || "",  
-                email: email || "",            
-            }));
-        } else {
-            console.log("Token validation failed.");
-            dispatch(logoutAction()); // Effettua il logout se necessario
-        }
-    } catch (error) {
-        console.error("Token validation failed:", error);
-        // In caso di errore, invalida e fai logout
-        dispatch(userAuthenticated({
-            valid: false, 
-            accessToken: "", 
-            userId: "",       
-            usernameAndEmail: "", 
-            email: "", 
-        }));
-        dispatch(logoutAction());
-    }
-};
-*/
 
 export const validateToken = async (dispatch: AppDispatch, getState: () => RootState) => {
     try {

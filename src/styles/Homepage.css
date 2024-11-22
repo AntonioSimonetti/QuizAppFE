@@ -1,0 +1,229 @@
+.Homepage-main-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+/* first div classes */
+
+.Your-quizzes-div {
+    width: 408px;
+    height: 263px;
+    background-color: #252525;
+    margin-top: 38px;
+    border-radius: 16px;
+}
+
+.Your-quizzes-logo-div {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 19px;
+    padding-top: 13px;
+}
+
+.Your-quizzes-logo-div > .icon {
+    width: 30px;
+    height: 30px;
+}
+
+.Para-div{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    font-size: 40px;
+    color: #F5FE37;
+    font-weight: 400;
+}
+
+.Para-div > p {
+    font-family: "DM Sans", sans-serif !important;
+}
+
+.Para-quizzes {
+    margin-top: -3.5rem;
+}
+
+/*Second div classes*/
+
+.Homepage-second-div{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 408px;
+    height: 151px;
+    margin-top: 16px;
+}
+
+.Public-div, .Statistics-div{
+    width: 196px;
+    height: 151px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 16px;
+}
+
+#Public-div{
+    margin-right: 16px;
+    background-color:  #F5FE37;
+    color: #121211;
+    font-size: 14px;
+}
+
+#Statistics-div{
+    color: #eaeaea;
+    font-size: 14px;
+    border: 1px solid #808080 !important;
+}
+
+.Public-div > .icon {
+    width: 80px;
+    height: 80px;
+    opacity: 1 !important;
+    margin-top: 26px;
+}
+
+.Statistics-div > .icon {
+    width: 80px;
+    height: 80px;
+    opacity: 1 !important;
+    margin-top: 26px;
+}
+
+/*Third div classes*/
+
+.Homepage-third-div{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 408px;
+    height: 151px;
+    margin-top: 16px;
+}
+
+.Social-div{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    width: 267px;
+    height: 151px;
+    border-radius: 16px;
+    background-color: #252525;
+    margin-right: 16px;
+}
+
+.Settings-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 125px;
+    height: 151px;
+    border-radius: 16px;
+    background-color: #252525;
+}
+
+#Social-div > p {
+    color: rgb(234, 234, 234, 75);
+    font-size: 14px;
+}
+
+.loghi-div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center; 
+}
+
+.loghi-div > img {
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    color: rgb(234, 234, 234, 75);
+}
+
+#Settings-div > p {
+    color: rgb(234, 234, 234, 75);
+    font-size: 14px;
+}
+
+.Settings-div > .icon {
+    width: 70px;
+    height: 70px;
+    margin-top: 26px;
+    color: rgb(234, 234, 234, 75) !important; 
+}
+
+/* fourth div classes*/
+
+.Homepage-fourth-div {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 408px;
+    height: 182px;
+    margin-top: 16px;
+    border-radius: 16px;
+    margin-bottom: 123px;
+    background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55)); 
+    color: #121211;
+}
+
+.container-icon {
+    display: flex;
+    width: 100%;
+    margin-left: 19px;
+    margin-top: -20px;
+    margin-bottom: -30px;
+}
+
+.container-icon > .icon {
+    width: 30px;
+    height: 40px;
+    opacity: 1 !important;
+    margin-right: 14px;
+}
+
+.container-text-numeber {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: -17px;
+}
+
+#number-placeholder {
+    font-size: 24px;
+    margin-top: -20px;
+}
+
+.container-days {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.container-number-day > p {
+    margin-bottom: 2px;
+}
+
+.container-number-day{
+}
+
+.monday-placeholder {
+    width: 40px;
+    height: 63px;
+    border-radius: 16px;
+    background-color: #121211;
+}
