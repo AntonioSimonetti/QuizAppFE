@@ -1,6 +1,7 @@
 import './App.css';
 import SignInPage from './components/SignInPage';
 import Homepage from './components/Homepage';
+import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect }  from 'react'
@@ -34,6 +35,7 @@ function App() {
         <Route path="/signup" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} /> {/*  queste rotte da rivedere*/} 
         <Route path="/signin" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} />
       </Routes>
+      {isLoggedIn && <div id='nav-container'><Navbar /></div>}
     </Router>
 
   );
