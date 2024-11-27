@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { validateToken, logout } from '../services/authentication';
 import { RootState } from '../store/store';  // Assicurati che questo sia importato correttamente
 import { AuthState } from '../types/authTypes'; 
+import React, { useState } from 'react';
 import "../styles/Homepage.css";
 import yourQuizzesLogo from '../assets/your-quizzes-logo.svg';
 import publicQuizzesLogo from "../assets/public-quizzes-logo.svg"
@@ -12,6 +13,10 @@ import redditLogo from "../assets/Reddit.svg"
 import facebookLogo from "../assets/Facebook.svg"
 import fireIcon from "../assets/icon-fire.svg"
 
+//componenti
+import YourQuizzes from './YourQuizzes';
+import PublicQuizzes from './PublicQuizzes'; 
+import Statistics from './Statistics'; 
 
 
 const Homepage = () => {
@@ -21,7 +26,7 @@ const Homepage = () => {
   const state = useSelector((state: RootState) => state.authenticationSlice) as AuthState;
 
 
-
+  const [activeComponent, setActiveComponent] = useState<string | null>(null);
 
   const handleLogout = () => {
     logout(dispatch);
@@ -38,6 +43,24 @@ const Homepage = () => {
     }
   };
 
+   // Funzione per tornare alla Homepage
+   const goBackToHomepage = () => {
+    setActiveComponent(null);
+  };
+
+   // Rendering dinamico
+   if (activeComponent === "YourQuizzes") {
+    return <YourQuizzes goBack={goBackToHomepage} />;
+  }
+
+  if (activeComponent === "PublicQuizzes") {
+    return <PublicQuizzes goBack={goBackToHomepage} />;
+  }
+
+  if (activeComponent === "Statistics") {
+    return <Statistics goBack={goBackToHomepage} />;
+  }
+
   return (
     <div className='Homepage-main-div'>
       {/*
@@ -51,8 +74,8 @@ const Homepage = () => {
         <p>Valid: {state.valid ? 'True' : 'False'}</p>
       </div>
       */}
-      <div className='Your-quizzes-div'>
-        <div className='Your-quizzes-logo-div'>
+      <div className='Your-quizzes-div' onClick={() => setActiveComponent("YourQuizzes")}>
+        <div className='Your-quizzes-logo-div' >
            <img src={yourQuizzesLogo} className="icon" alt="Your quizzes logo" />
         </div>
         <div className='Para-div'>
@@ -61,11 +84,11 @@ const Homepage = () => {
         </div>
       </div>
       <div className='Homepage-second-div'>
-        <div className='Public-div' id='Public-div'>
+        <div className='Public-div' id='Public-div' onClick={() => setActiveComponent("PublicQuizzes")}>
           <img src={publicQuizzesLogo} className="icon" alt="Public Quizzes logo" />
           <p>Public Quizzes</p>
         </div>
-        <div className='Statistics-div' id='Statistics-div'>
+        <div className='Statistics-div' id='Statistics-div' onClick={() => setActiveComponent("Statistics")}>
           <img src={statisticsLogo} className="icon" alt="Statistics logo" />
           <p>Statistics</p>
         </div>
