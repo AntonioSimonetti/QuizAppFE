@@ -1,8 +1,133 @@
 .main-div {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start !important;
     align-items: center;
-    flex-direction: column; 
     height: 99vh;
     width: 99vw;
 }
+
+#your-quizzes-top-div {
+    margin-top: 97px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+#your-quizzes-top-div > h1 {
+    font-size: 32px !important;
+    margin-top: -1px;
+    background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55));
+    font-family: "Roboto Condensed" !important;
+    /* Applico il gradiente allo sfondo, ritagliando lo sfondo sul testo e rendendo il testo tansparent cosi da farlo "sembrare" di quel grandiente */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Compatibilità */
+    background-clip: text; 
+
+}
+
+.Line-two {
+    width: 290px;
+    height: 2px; 
+    background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55)); 
+    margin-top: -17px;
+}
+
+#quizzes-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 87px !important;
+}
+
+.single-quiz-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.single-quiz-para {
+    width: 196px;
+    height: 50px;
+    background-color: #252525;
+    border-radius: 16px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 16px;
+    margin-right: 12px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3), 0px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.single-quiz-para > p {
+    margin-left: 24px;
+}
+
+.remove-icon , .edit-icon {
+    width: 57px;
+    height: 50px;
+    border-radius: 16px;
+    background-color: #252525;
+    margin-right: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3), 0px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.remove-icon > img {
+    width: 30px;
+    height: 30px;
+}
+
+.edit-icon > img {
+    width: 30px;
+    height: 30px;
+}
+
+.pagination-buttons button {
+    background: none; 
+    border: none; 
+    color: rgba(128, 128, 128, 0.75); 
+    font-size: 24px; 
+    font-weight: bold;
+    cursor: pointer; 
+    padding: 0; 
+    margin: 0 8px; 
+    transition: color 0.2s ease; 
+}
+
+.pagination-buttons button:hover {
+    color: #f5fe37; 
+}
+
+.pagination-buttons button:focus {
+    outline: none;
+}
+
+.create-quiz-btn {
+    border-radius: 16px;
+    width: 222px;
+    height: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #121211;
+    background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55));
+    margin-top: 20px;
+    margin-bottom: 3rem; 
+    cursor: pointer;
+}
+
+.create-quiz-btn img {
+    opacity: 1 !important;
+    margin-right: 14px;
+}
+
+.create-quiz-btn p {
+    text-align: center !important;
+}
+
