@@ -65,7 +65,7 @@ const YourQuizzes = ({ goBack }: { goBack: () => void }) => {
           <img src={homeBtnIcon} className="icon" alt="icon inside button"/>
           <p>Create new quiz</p>
       </div>
-      <button onClick={goBack}>Back to Homepage</button>
+     {/* <button onClick={goBack}>Back to Homepage</button>*/}
   
     </div>
   );

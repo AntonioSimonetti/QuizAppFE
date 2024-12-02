@@ -8,8 +8,8 @@
 /* first div classes */
 
 .Your-quizzes-div {
-    width: 408px;
-    height: 263px;
+    width: 346px;
+    height: 223px;
     background-color: #252525;
     margin-top: 38px;
     border-radius: 16px; 
@@ -59,7 +59,7 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    font-size: 40px;
+    font-size: 34px;
     color: #F5FE37;
     font-weight: 400;
     cursor: pointer;
@@ -79,14 +79,14 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 408px;
-    height: 151px;
+    width: 346px;
+    height: 128px;
     margin-top: 16px;
 }
 
 .Public-div, .Statistics-div{
-    width: 196px;
-    height: 151px;
+    width: 166px;
+    height: 128px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,27 +99,27 @@
     margin-right: 16px;
     background-color:  #F5FE37;
     color: #121211;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 #Statistics-div{
     color: #eaeaea;
-    font-size: 14px;
+    font-size: 12px;
     border: 1px solid #808080 !important;
 }
 
 .Public-div > .icon {
-    width: 80px;
-    height: 80px;
+    width: 68px;
+    height: 68px;
     opacity: 1 !important;
-    margin-top: 26px;
+    margin-top: 22px;
 }
 
 .Statistics-div > .icon {
-    width: 80px;
-    height: 80px;
+    width: 68px;
+    height: 68px;
     opacity: 1 !important;
-    margin-top: 26px;
+    margin-top: 22px;
 }
 
 /*Third div classes*/
@@ -128,9 +128,9 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 408px;
-    height: 151px;
-    margin-top: 16px;
+    width: 346px;
+    height: 128px;
+    margin-top: 14px;
 }
 
 .Social-div{
@@ -138,11 +138,11 @@
     justify-content: flex-end;
     align-items: center;
     flex-direction: column;
-    width: 267px;
-    height: 151px;
+    width: 227px;
+    height: 128px;
     border-radius: 16px;
     background-color: #252525;
-    margin-right: 16px;
+    margin-right: 14px;
     cursor: pointer;
 }
 
@@ -151,8 +151,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 125px;
-    height: 151px;
+    width: 106px;
+    height: 128px;
     border-radius: 16px;
     background-color: #252525;
     cursor: pointer;
@@ -160,7 +160,7 @@
 
 #Social-div > p {
     color: rgb(234, 234, 234, 75);
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .loghi-div {
@@ -171,21 +171,21 @@
 }
 
 .loghi-div > img {
-    width: 50px;
-    height: 50px;
-    padding: 10px;
+    width: 42px;
+    height: 42px;
+    padding: 8px;
     color: rgb(234, 234, 234, 75);
 }
 
 #Settings-div > p {
     color: rgb(234, 234, 234, 75);
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .Settings-div > .icon {
-    width: 70px;
-    height: 70px;
-    margin-top: 26px;
+    width: 59px;
+    height: 59px;
+    margin-top: 22px;
     color: rgb(234, 234, 234, 75) !important; 
 }
 
@@ -196,11 +196,11 @@
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
-    width: 408px;
-    height: 182px;
-    margin-top: 16px;
+    width: 346px;
+    height: 154px;
+    margin-top: 13px;
     border-radius: 16px;
-    margin-bottom: 123px;
+    margin-bottom: 104px;
     background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55)); 
     color: #121211;
 }
@@ -208,17 +208,17 @@
 .container-icon {
     display: flex;
     width: 100%;
-    margin-left: 19px;
-    margin-top: -20px;
+    margin-left: 16px;
+    margin-top:-20px;
     margin-bottom: -30px;
     cursor: pointer;
 }
 
 .container-icon > .icon {
-    width: 30px;
-    height: 40px;
+    width: 25px;
+    height: 34px;
     opacity: 1 !important;
-    margin-right: 14px;
+    margin-right: 12px;
 }
 
 .container-text-numeber {
@@ -227,12 +227,12 @@
     align-items: flex-start;
     flex-direction: column;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 12px;
     margin-top: -17px;
 }
 
 #number-placeholder {
-    font-size: 24px;
+    font-size: 20px;
     margin-top: -20px;
 }
 
@@ -252,8 +252,8 @@
 }
 
 .monday-placeholder {
-    width: 40px;
-    height: 63px;
+    width: 34px;
+    height: 53px;
     border-radius: 16px;
     background-color: #121211;
 }

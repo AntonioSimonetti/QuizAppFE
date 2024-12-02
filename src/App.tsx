@@ -35,7 +35,7 @@ function App() {
         <Route path="/signup" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} /> {/*  queste rotte da rivedere*/} 
         <Route path="/signin" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} />
       </Routes>
-      {isLoggedIn && <div id='nav-container'><Navbar /></div>}
+        {isLoggedIn && <div id='nav-container'><Navbar /></div>}
     </Router>
 
   );
