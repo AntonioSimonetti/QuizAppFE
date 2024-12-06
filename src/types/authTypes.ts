@@ -17,3 +17,5 @@ export const initialState: AuthState = {
     usernameAndEmail: "",
     valid: false
 }
+
+  

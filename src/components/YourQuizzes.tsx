@@ -4,22 +4,31 @@ import removeIcon from "../assets/remove-icon.svg";
 import editIcon from "../assets/edit-icon.svg";
 import homeBtnIcon from "../assets/house-btn-icon.svg";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { fetchQuizzesByUserId } from "../services/quizzes";
+
+
 const YourQuizzes = ({ goBack }: { goBack: () => void }) => {
   // Lista finta di quiz
   const fakeQuizzes = Array.from({ length: 20 }, (_, i) => `Quiz ${i + 1}`);
 
-  // Stato per la pagina corrente
-  const [currentPage, setCurrentPage] = useState(0);
+  
 
-  // Numero di quiz per pagina
+  const [currentPage, setCurrentPage] = useState(0);
+  //const [quizzes, setQuizzes] = useState<any[]>([]); // Usa un tipo generico per i quiz per ora
+  const [loading, setLoading] = useState(false);
+  const [quizzes, setQuizzes] = useState();
+  const [error, setError] = useState<string | null>(null);
+  const token = useSelector((state: RootState) => state.authenticationSlice.token); // Recupera il token dallo stato di autenticazione
+  const userId = useSelector((state: RootState) => state.authenticationSlice.userId);
+
   const quizzesPerPage = 5;
 
-  // Calcola i quiz da mostrare nella pagina corrente
   const startIndex = currentPage * quizzesPerPage;
   const endIndex = startIndex + quizzesPerPage;
   const quizzesToShow = fakeQuizzes.slice(startIndex, endIndex);
 
-  // Funzioni per navigare tra le pagine
   const nextPage = () => {
     if (endIndex < fakeQuizzes.length) {
       setCurrentPage(currentPage + 1);
@@ -32,6 +41,31 @@ const YourQuizzes = ({ goBack }: { goBack: () => void }) => {
     }
   };
 
+  const handleFetchQuizzes = async () => {
+    if (!token) {
+      setError("No token available");
+      return;
+    }
+  
+    setLoading(true);
+    setError(null);
+  
+    try {
+      console.log("Token being sent: ", token);
+      console.log("userId being sent: ", userId);
+
+      const response = await fetchQuizzesByUserId(userId, token);
+      setQuizzes(response);
+    } catch (err) {
+      setError("Failed to fetch quizzes: ");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+ 
+  
+
   return (
     <div className="main-div">
       <div id="your-quizzes-top-div">
@@ -39,7 +73,6 @@ const YourQuizzes = ({ goBack }: { goBack: () => void }) => {
         <div className="Line-two"></div>
       </div>
       <div id="quizzes-container">
-        {/* Mostra i quiz correnti */}
         {quizzesToShow.map((quiz, index) => (
           <div className="single-quiz-container" key={index}>
             <div className="single-quiz-para"><p>{quiz}</p></div>
@@ -59,6 +92,9 @@ const YourQuizzes = ({ goBack }: { goBack: () => void }) => {
         </button>
         <button onClick={nextPage} disabled={endIndex >= fakeQuizzes.length}>
             &gt;
+        </button>
+        <button onClick={handleFetchQuizzes} disabled={loading}>
+        "logga"
         </button>
       </div>
       <div className="create-quiz-btn">
