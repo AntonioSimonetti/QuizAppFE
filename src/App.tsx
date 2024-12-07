@@ -5,27 +5,50 @@ import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect }  from 'react'
-import { userAuthenticated } from './store/authenticationSlice';
+import { userAuthenticated, setValidating, logout  } from './store/authenticationSlice';
 import { RootState } from './store/store';
 import { validateToken } from './services/authentication';
 
 
 
 function App() {
-  const {isLoggedIn} = useSelector((state:RootState) => state.authenticationSlice);
+  const {isLoggedIn, isValidating } = useSelector((state:RootState) => state.authenticationSlice);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if(token) {
-      dispatch(userAuthenticated({ accessToken: token, email:"", userId:"", usernameAndEmail: "", valid: false}))
-
-      // Validiamo il token con l'API
-      // validateToken(dispatch);
+    dispatch(setValidating(true));
+    if (!token) {
+      dispatch(setValidating(false));
+      return;
     }
-  }, [dispatch])
+    validateToken(dispatch)
+      .then(() => {
+        dispatch(
+          userAuthenticated({
+            accessToken: token,
+            email: "",
+            userId: "",
+            usernameAndEmail: "",
+            valid: true, 
+          })
+        );
+      })
+      .catch(() => {
+        dispatch(logout());
+      })
+      .finally(() => {
+        dispatch(setValidating(false));
+      });
+  }, [dispatch]);
 
+  useEffect(() => {
+    console.log("isValidating changed:", isValidating);
+  }, [isValidating]);
 
+  if (isValidating) {
+    return <div>Loading...</div>;
+  }
 
 
   return (

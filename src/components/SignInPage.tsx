@@ -114,7 +114,4 @@ const SignInPage = () => {
 
 export default SignInPage;
 
-//Scrivere l'endpoint checkEmailIsAlreadyInUse
-//ri implementare check email in use nel signup
-//implementare validation??dove?
 

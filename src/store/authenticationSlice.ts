@@ -25,6 +25,9 @@ export const authenticationSlice = createSlice({
             state.usernameAndEmail = action.payload.usernameAndEmail || state.usernameAndEmail;
             state.valid = action.payload.valid;
         },
+        setValidating: (state: AuthState, action: PayloadAction<boolean>) => {
+            state.isValidating = action.payload; 
+          },
         logout: (state: AuthState) => {
             localStorage.clear();
             state.token = "";
@@ -41,6 +44,6 @@ export const authenticationSlice = createSlice({
     }
 });
 
-export const { userAuthenticated, logout, emailConfirmed  } = authenticationSlice.actions;
+export const { userAuthenticated, logout, setValidating, emailConfirmed  } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer; //export solo del riduttore 

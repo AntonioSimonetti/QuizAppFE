@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { setActiveComponent } from '../store/navigationSlice';
 import { validateToken, logout } from '../services/authentication';
 import { RootState } from '../store/store';  // Assicurati che questo sia importato correttamente
 import { AuthState } from '../types/authTypes'; 
@@ -23,25 +24,18 @@ const Homepage = () => {
   const dispatch = useDispatch();
   
   // Ottieni lo stato globale da Redux
-  const state = useSelector((state: RootState) => state.authenticationSlice) as AuthState;
+  const activeComponent = useSelector((state: RootState) => state.navigationSlice.activeComponent);
 
+  const handleSetActiveComponent = (component: string | null) => {
+    dispatch(setActiveComponent(component));
+  };
 
-  const [activeComponent, setActiveComponent] = useState<string | null>(null);
 
   const handleLogout = () => {
     logout(dispatch);
   };
 
-  const handleValidateToken = async () => {
-    try {
-      await validateToken(dispatch, () => ({
-        authenticationSlice: state
-      } as RootState));
-      console.log('Token validated successfully');
-    } catch (error) {
-      console.error('Token validation failed:', error);
-    }
-  };
+
 
    // Funzione per tornare alla Homepage
    const goBackToHomepage = () => {
@@ -50,31 +44,20 @@ const Homepage = () => {
 
    // Rendering dinamico
    if (activeComponent === "YourQuizzes") {
-    return <YourQuizzes goBack={goBackToHomepage} />;
+    return <YourQuizzes   />;
   }
 
   if (activeComponent === "PublicQuizzes") {
-    return <PublicQuizzes goBack={goBackToHomepage} />;
+    return <PublicQuizzes  />;
   }
 
   if (activeComponent === "Statistics") {
-    return <Statistics goBack={goBackToHomepage} />;
+    return <Statistics   />;
   }
 
   return (
     <div className='Homepage-main-div'>
-      {/*
-      <h1>Homepage</h1>
-      <button onClick={handleLogout}>Logout</button>
-      <br />
-      <button onClick={handleValidateToken}>Validate Token</button>
-      <div>
-        <p>Email: {state.email}</p>
-        <p>UserId: {state.userId}</p>
-        <p>Valid: {state.valid ? 'True' : 'False'}</p>
-      </div>
-      */}
-      <div className='Your-quizzes-div' onClick={() => setActiveComponent("YourQuizzes")}>
+      <div className='Your-quizzes-div' onClick={() => handleSetActiveComponent("YourQuizzes")}>
         <div className='Your-quizzes-logo-div' >
            <img src={yourQuizzesLogo} className="icon" alt="Your quizzes logo" />
         </div>
@@ -84,11 +67,11 @@ const Homepage = () => {
         </div>
       </div>
       <div className='Homepage-second-div'>
-        <div className='Public-div' id='Public-div' onClick={() => setActiveComponent("PublicQuizzes")}>
+        <div className='Public-div' id='Public-div' onClick={() => handleSetActiveComponent("PublicQuizzes")}>
           <img src={publicQuizzesLogo} className="icon" alt="Public Quizzes logo" />
           <p>Public Quizzes</p>
         </div>
-        <div className='Statistics-div' id='Statistics-div' onClick={() => setActiveComponent("Statistics")}>
+        <div className='Statistics-div' id='Statistics-div' onClick={() => handleSetActiveComponent("Statistics")}>
           <img src={statisticsLogo} className="icon" alt="Statistics logo" />
           <p>Statistics</p>
         </div>

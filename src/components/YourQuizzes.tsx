@@ -9,7 +9,7 @@ import { RootState } from "../store/store";
 import { fetchQuizzesByUserId } from "../services/quizzes";
 
 
-const YourQuizzes = ({ goBack }: { goBack: () => void }) => {
+const YourQuizzes = () => {
   // Lista finta di quiz
   const fakeQuizzes = Array.from({ length: 20 }, (_, i) => `Quiz ${i + 1}`);
 
@@ -100,9 +100,7 @@ const YourQuizzes = ({ goBack }: { goBack: () => void }) => {
       <div className="create-quiz-btn">
           <img src={homeBtnIcon} className="icon" alt="icon inside button"/>
           <p>Create new quiz</p>
-      </div>
-     {/* <button onClick={goBack}>Back to Homepage</button>*/}
-  
+      </div>  
     </div>
   );
 };
