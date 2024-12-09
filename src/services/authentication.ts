@@ -62,7 +62,7 @@ export const validateToken2 = async (dispatch: AppDispatch, getState: () => Root
   };
   
 
-  export const validateToken = async (dispatch: AppDispatch) => {
+  export const validateToken1 = async (dispatch: AppDispatch) => {
     try {
       dispatch(setValidating(true)); // Stato iniziale di validazione
   
@@ -90,6 +90,22 @@ export const validateToken2 = async (dispatch: AppDispatch, getState: () => Root
     } finally {
       dispatch(setValidating(false)); // Fine della validazione
     }
+  };
+
+  export const validateToken = async () => {
+    const token = localStorage.getItem("token");
+    
+    if (!token) throw new Error("No token found.");
+  
+    const response = await axiosInstance.get("/api/Token/ValidateToken", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  
+    if (response.status !== 200) {
+      throw new Error("Token validation failed.");
+    }
+  
+    return token;
   };
 
 
