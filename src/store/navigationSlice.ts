@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface NavigationState {
-  activeComponent: string | null; // Può essere "Homepage", "YourQuizzes", ecc.
-}
+import { NavigationState } from '../interfaces/navigation';
 
 const initialState: NavigationState = {
   activeComponent: null,

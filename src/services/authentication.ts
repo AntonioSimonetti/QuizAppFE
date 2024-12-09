@@ -2,97 +2,13 @@ import axios from "axios";
 import { RootState } from '../store/store';
 import { AppDispatch } from "../store/store";
 import { userAuthenticated, logout as logoutAction, setValidating } from "../store/authenticationSlice"
-
-// Da decidere dove mettere dopo
-interface Credentials {
-    email: string, 
-    password: string;
-}
+import { Credentials } from "../interfaces/auth";
 
 const axiosInstance = axios.create({
     baseURL:"https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/"
 })
 
-
-export const validateToken2 = async (dispatch: AppDispatch, getState: () => RootState) => {
-    try {
-      const currentState = getState().authenticationSlice; // Ottieni lo stato di authenticationSlice
-      const token = currentState.token;
-  
-      if (!token) {
-        console.error("No token found.");
-        throw new Error("No token found.");
-      }
-  
-      // Chiamata all'API per validare il token
-      const response = await axiosInstance.get("/api/Token/ValidateToken", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      if (response.status === 200) {
-        // Se il token è valido, aggiorna lo stato esistente
-        dispatch(
-          userAuthenticated({
-            accessToken: token,
-            email: currentState.email || "",
-            userId: currentState.userId || "",
-            usernameAndEmail: currentState.usernameAndEmail || "",
-            valid: true,
-          })
-        );
-      } else {
-        console.log("Token validation failed.");
-        dispatch(logoutAction()); // Effettua il logout se il token non è valido
-      }
-    } catch (error) {
-      console.error("Token validation failed:", error);
-      dispatch(
-        userAuthenticated({
-          accessToken: "",
-          email: "",
-          userId: "",
-          usernameAndEmail: "",
-          valid: false,
-        })
-      );
-      dispatch(logoutAction()); // Effettua il logout in caso di errore
-    }
-  };
-  
-
-  export const validateToken1 = async (dispatch: AppDispatch) => {
-    try {
-      dispatch(setValidating(true)); // Stato iniziale di validazione
-  
-      const token = localStorage.getItem("token"); // Otteniamo il token direttamente dal localStorage
-  
-      if (!token) throw new Error("No token found.");
-  
-      const response = await axiosInstance.get("/api/Token/ValidateToken", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-  
-      if (response.status === 200) {
-        dispatch(userAuthenticated({
-          accessToken: token,
-          email: "", // Valori predefiniti, aggiornali se servono
-          userId: "", 
-          usernameAndEmail: "", 
-          valid: true, // Token valido
-        }));
-      } else {
-        throw new Error("Token validation failed.");
-      }
-    } catch (error) {
-      dispatch(logoutAction()); // Effettua logout in caso di errore
-    } finally {
-      dispatch(setValidating(false)); // Fine della validazione
-    }
-  };
-
-  export const validateToken = async () => {
+export const validateToken = async () => {
     const token = localStorage.getItem("token");
     
     if (!token) throw new Error("No token found.");
@@ -106,7 +22,7 @@ export const validateToken2 = async (dispatch: AppDispatch, getState: () => Root
     }
   
     return token;
-  };
+};
 
 
 export const checkEmailInUse = async (email: string) => {

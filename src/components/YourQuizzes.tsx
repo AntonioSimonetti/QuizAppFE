@@ -1,108 +1,141 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/YourQuizzes.css";
 import removeIcon from "../assets/remove-icon.svg";
 import editIcon from "../assets/edit-icon.svg";
 import homeBtnIcon from "../assets/house-btn-icon.svg";
-
-import { useSelector } from "react-redux";
+import { Quiz } from '../interfaces/quiz';
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
-import { fetchQuizzesByUserId } from "../services/quizzes";
+import { fetchQuizzesByUserId, createQuiz, deleteQuizById, CreateQuizPayload } from "../services/quizzes";
 
 
 const YourQuizzes = () => {
-  // Lista finta di quiz
-  const fakeQuizzes = Array.from({ length: 20 }, (_, i) => `Quiz ${i + 1}`);
-
-  
-
+  const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(0);
-  //const [quizzes, setQuizzes] = useState<any[]>([]); // Usa un tipo generico per i quiz per ora
-  const [loading, setLoading] = useState(false);
-  const [quizzes, setQuizzes] = useState();
-  const [error, setError] = useState<string | null>(null);
-  const token = useSelector((state: RootState) => state.authenticationSlice.token); // Recupera il token dallo stato di autenticazione
-  const userId = useSelector((state: RootState) => state.authenticationSlice.userId);
-
   const quizzesPerPage = 5;
 
-  const startIndex = currentPage * quizzesPerPage;
-  const endIndex = startIndex + quizzesPerPage;
-  const quizzesToShow = fakeQuizzes.slice(startIndex, endIndex);
+  // Selettori per Redux
+  const token = useSelector((state: RootState) => {console.log('Auth State:', state.authenticationSlice); return state.authenticationSlice.token;});
+  const userId = useSelector((state: RootState) => state.authenticationSlice.userId);
+  const quizzes = useSelector((state: RootState) => {console.log('Quizzes from state:', state.quizzesSlice.data.quizzes); return state.quizzesSlice.data.quizzes;}); 
+  const status = useSelector((state: RootState) => state.quizzesSlice.status);
+  const error = useSelector((state: RootState) => state.quizzesSlice.error);
 
-  const nextPage = () => {
-    if (endIndex < fakeQuizzes.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const previousPage = () => {
-    if (startIndex > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleFetchQuizzes = async () => {
-    if (!token) {
-      setError("No token available");
+  useEffect(() => {
+    if (!token || !userId) {
+      console.log('Missing token or userId:', { token, userId });
       return;
     }
   
-    setLoading(true);
-    setError(null);
-  
-    try {
-      console.log("Token being sent: ", token);
-      console.log("userId being sent: ", userId);
-
-      const response = await fetchQuizzesByUserId(userId, token);
-      setQuizzes(response);
-    } catch (err) {
-      setError("Failed to fetch quizzes: ");
-    } finally {
-      setLoading(false);
-    }
-  };
-
- 
+    console.log('Fetching with:', { token, userId });
+    fetchQuizzesByUserId(userId, token, dispatch);
+  }, [token, userId, dispatch]);
   
 
-  return (
-    <div className="main-div">
-      <div id="your-quizzes-top-div">
-        <h1>Your Quizzes</h1>
-        <div className="Line-two"></div>
-      </div>
-      <div id="quizzes-container">
-        {quizzesToShow.map((quiz, index) => (
-          <div className="single-quiz-container" key={index}>
-            <div className="single-quiz-para"><p>{quiz}</p></div>
-            <div className="remove-icon">
-              <img src={removeIcon} className="icon" alt="remove icon" />
-            </div>
-            <div className="edit-icon">
-              <img src={editIcon} className="icon" alt="edit icon" />
-            </div>
-          </div>
-        ))}
-      </div>
+const startIndex = currentPage * quizzesPerPage;
+const endIndex = startIndex + quizzesPerPage;
+const quizzesToShow = quizzes.slice(startIndex, endIndex);
 
-      <div className="pagination-buttons">
-        <button onClick={previousPage} disabled={currentPage === 0}>
-            &lt;
-        </button>
-        <button onClick={nextPage} disabled={endIndex >= fakeQuizzes.length}>
-            &gt;
-        </button>
-        <button onClick={handleFetchQuizzes} disabled={loading}>
-        "logga"
-        </button>
-      </div>
-      <div className="create-quiz-btn">
-          <img src={homeBtnIcon} className="icon" alt="icon inside button"/>
-          <p>Create new quiz</p>
-      </div>  
-    </div>
-  );
+const nextPage = () => {
+  if (endIndex < quizzes.length) {
+    setCurrentPage(currentPage + 1);
+  }
 };
+
+const previousPage = () => {
+  if (startIndex > 0) {
+    setCurrentPage(currentPage - 1);
+  }
+};
+
+const truncateTitle = (title: string, maxLength: number = 20) => {
+  return title.length > maxLength ? title.slice(0, maxLength) + '...' : title;
+};
+
+const handleCreateQuiz = async () => {
+  try {
+    if (!token) {
+      console.error('No token available');
+      return;
+    }
+
+    const newQuiz: CreateQuizPayload = {
+      id: 0, //viene poi sovrascritto assegnado all'entità un id univoco
+      title: "New Quiz" + Math.random(), //placeholder di test
+      isPublic: true,
+      timelimit: 0,
+      userId: userId
+    };
+
+    await createQuiz(userId, newQuiz, token, dispatch);
+  } catch (error) {
+    console.error('Failed to create quiz:', error);
+  }
+};
+
+const [deletingQuizId, setDeletingQuizId] = useState<number | null>(null);
+
+const handleDelete = async (quizId: number) => {
+  try {
+    setDeletingQuizId(quizId);
+    await deleteQuizById(userId,quizId, token, dispatch);
+  } catch (error) {
+    console.error('Failed to delete quiz:', error);
+  } finally {
+    setDeletingQuizId(null);
+  }
+}
+
+//Animazione durante la cancellazione
+const blinkAnimation = {
+  animation: 'blink 0.5s linear infinite',
+  WebkitAnimation: 'blink 0.5s linear infinite'
+};
+
+
+return (
+  <div className="main-div">
+    <div id="your-quizzes-top-div">
+      <h1>Your Quizzes</h1>
+      <div className="Line-two"></div>
+    </div>
+    
+    {status === 'loading' && <div>Loading...</div>}
+    {error && <div>Error: {error}</div>}
+    
+    <div id="quizzes-container">
+      {quizzesToShow.map((quiz: Quiz) => (
+        <div className="single-quiz-container" key={quiz.id}>
+          <div className="single-quiz-para">
+            <p title={quiz.title}>{truncateTitle(quiz.title)}</p>
+          </div>
+          <div className="remove-icon" onClick={() => handleDelete(quiz.id)}
+              style={deletingQuizId === quiz.id ? blinkAnimation : {}}
+          >
+            <img src={removeIcon} className="icon" alt="remove icon" />
+          </div>
+          <div className="edit-icon">
+            <img src={editIcon} className="icon" alt="edit icon" />
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div className="pagination-buttons">
+      <button onClick={previousPage} disabled={currentPage === 0}>
+        &lt;
+      </button>
+      <button onClick={nextPage} disabled={endIndex >= quizzes.length}>
+        &gt;
+      </button>
+    </div>
+    
+    <div className="create-quiz-btn" onClick={handleCreateQuiz}>
+      <img src={homeBtnIcon} className="icon" alt="icon inside button"/>
+      <p>Create new quiz</p>
+    </div>  
+  </div>
+)
+}
 
 export default YourQuizzes;

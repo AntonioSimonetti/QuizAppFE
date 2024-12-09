@@ -1,3 +1,16 @@
+export interface Credentials {
+    email: string, 
+    password: string;
+}
+
+export interface AuthPayload {
+    accessToken: string;
+    email?: string; 
+    userId: string;
+    usernameAndEmail: string;
+    valid: boolean;
+}
+
 export interface AuthState {
     token: string;
     isLoggedIn: boolean;
@@ -8,8 +21,6 @@ export interface AuthState {
     isValidating: boolean;
 }
 
-// Initial state
-
 export const initialState: AuthState = {
     token: "",
     isLoggedIn: false,
@@ -19,5 +30,3 @@ export const initialState: AuthState = {
     valid: false,
     isValidating: false,
 }
-
-  

@@ -15,34 +15,6 @@ function App() {
   const {isLoggedIn, isValidating } = useSelector((state:RootState) => state.authenticationSlice);
   const dispatch = useDispatch();
 
-  /*
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    dispatch(setValidating(true));
-    if (!token) {
-      dispatch(setValidating(false));
-      return;
-    }
-    validateToken(dispatch)
-      .then(() => {
-        dispatch(
-          userAuthenticated({
-            accessToken: token,
-            email: "",
-            userId: "",
-            usernameAndEmail: "",
-            valid: true, 
-          })
-        );
-      })
-      .catch(() => {
-        dispatch(logout());
-      })
-      .finally(() => {
-        dispatch(setValidating(false));
-      });
-  }, [dispatch]);
-*/
   useEffect(() => {
     const token = localStorage.getItem("token");
   

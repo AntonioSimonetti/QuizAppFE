@@ -1,20 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AuthState, initialState } from "../types/authTypes";
-
-// Forse lo sposto da qui dopo
-interface AuthPayload {
-    accessToken: string;
-    email?: string; 
-    userId: string;
-    usernameAndEmail: string;
-    valid: boolean;
-}
-
-
+import { AuthPayload, AuthState, initialState } from "../interfaces/auth";
 
 export const authenticationSlice = createSlice({
     name: "authentication",
-    initialState, // definito nell'interfaccia ed importato direttamente qui invece che definirlo qua
+    initialState, 
     reducers: {
         userAuthenticated: (state: AuthState, action: PayloadAction<AuthPayload>) => {
             localStorage.setItem("token", action.payload.accessToken);
