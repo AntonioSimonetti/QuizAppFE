@@ -8,6 +8,9 @@ import { useEffect }  from 'react'
 import { userAuthenticated, setValidating, logout  } from './store/authenticationSlice';
 import { RootState } from './store/store';
 import { validateToken } from './services/authentication';
+import { store } from './store/store';
+
+
 
 
 
@@ -27,12 +30,11 @@ function App() {
   
     validateToken()
       .then((validToken) => {
+        const currentState = useSelector((state: RootState) => state.authenticationSlice);
         dispatch(
           userAuthenticated({
+            ...currentState, // Mantieni i valori esistenti
             accessToken: validToken,
-            email: "",
-            userId: "",
-            usernameAndEmail: "",
             valid: true,
           })
         );
