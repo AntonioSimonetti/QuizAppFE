@@ -43,3 +43,22 @@ export const initialStateQuiz: QuizzesState = {
     status: "idle", 
     error: null, 
   };
+
+export interface LocalQuizState {
+    quizzes: Record<number, {
+      title: string;
+      questions: Record<number, {
+        text: string;
+        options: Record<number, {
+          text: string;
+          isCorrect: boolean;
+        }>;
+      }>;
+    }>;
+    currentQuizId: number;
+  }
+  
+export const initialQuizState: LocalQuizState = {
+    quizzes: {},
+    currentQuizId: 0
+  };

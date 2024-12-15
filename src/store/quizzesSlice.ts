@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Question, initialStateQuiz, Option  } from "../interfaces/quiz";
 
-// Interface le spostiamo dopo
-
-
 
 export const quizzesSlice = createSlice({
   name: "quizzes",
