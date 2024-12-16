@@ -140,20 +140,53 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #151515;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
   .modal-content {
-    background-color: white;
+    position: relative;
+    background-color: #252525;
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 16px; /* Arrotondamento del contenitore */
     width: 90%;
     max-width: 500px;
-    color: black;
+    color: rgba(255, 255, 255, 0.87);
+    z-index: 1; /* Per assicurarti che il contenuto rimanga sopra */
+    overflow: hidden; /* Importante per gestire il bordo arrotondato */
   }
+
+  #HeaderNewQuiz {
+    font-size: 32px;
+  }
+  
+  #labelId {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .modal-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 16px; /* Arrotondamento del bordo */
+    padding: 3px; /* Spessore del bordo */
+    background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55));
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; 
+    mask-composite: exclude;
+    z-index: -1; /* Messo dietro il contenuto */
+    font-family: "Roboto Condensed" !important;
+  }
+  
+  
   
   .quiz-form {
     display: flex;
@@ -169,8 +202,37 @@
   
   .form-group input {
     padding: 0.5rem;
-    border: 1px solid #ccc;
+    border: 1px solid gray;
     border-radius: 4px;
+    
+  }
+
+  .form-group input:focus {
+    border: 1px solid rgb(0, 255, 144); /* Cambia colore del bordo in focus */
+    outline: none; /* Rimuove il contorno di default */
+    box-shadow: 0 0 8px rgba(0, 255, 144, 0.5); /* Aggiungi un effetto glow */
+}
+
+  #quizTitle {
+    background-color: #252525;
+    color: rgba(255, 255, 255, 0.87);
+
+  }
+
+  #questionText {
+    background-color: #252525;
+  }  
+
+  .option-input-group > input {
+    background-color: #252525;
+    border: 1px solid gray;
+    border-radius: 6px;
+  }
+
+  .option-input-group > input:focus {
+    border: 1px solid rgb(0, 255, 144); /* Cambia colore del bordo in focus */
+    outline: none; /* Rimuove il contorno di default */
+    box-shadow: 0 0 8px rgba(0, 255, 144, 0.5); /* Aggiungi un effetto glow */
   }
   
   .form-buttons {
@@ -188,15 +250,33 @@
   }
   
   .form-buttons button[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #00FF90;
     color: black;
   }
   
   .form-buttons button[type="button"] {
-    background-color: #f44336;
+    background-color: #E24F46;
     color: black;
   }
+
+  .back-btn {
+
+  }
  
+  .cancel-btn {
+    background-color: #E24F46;
+    color: black;
+  }
+
+  .add-question-btn {
+    background-color: #00FF90 !important;
+    color: black;
+  }
+
+  .finish-btn {
+    background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55));
+    color: black;
+  }
   
 
 @keyframes blink {

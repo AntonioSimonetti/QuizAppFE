@@ -202,9 +202,9 @@ const handleFinishQuiz = async () => {
 // Funzione per renderizzare il form di creazione del quiz
 const renderTitleForm = () => (
   <form onSubmit={handleTitleSubmit} className="quiz-form">
-    <h2>Create New Quiz</h2>
+    <h2 id="HeaderNewQuiz">New Quiz</h2>
     <div className="form-group">
-      <label htmlFor="quizTitle">Quiz Title:</label>
+      <label htmlFor="quizTitle" id="labelId">Title:</label>
       <input
         type="text"
         id="quizTitle"
@@ -262,6 +262,7 @@ const renderQuestionsForm = () => (
           <input
             type="radio"
             name="correctOption"
+            id="radioBtn"
             checked={currentQuestion.correctOption === index}
             onChange={() => setCurrentQuestion(prev => ({
               ...prev,
@@ -273,11 +274,12 @@ const renderQuestionsForm = () => (
     ))}
 
     <div className="form-buttons">
-      <button type="button" onClick={() => setCurrentStep('title')}>Back</button>
-      <button type="button" onClick={toggleModal}>Cancel</button>
+      <button type="button" className="back-btn" onClick={() => setCurrentStep('title')}>Back</button>
+      <button type="button" className="cancel-btn" onClick={toggleModal}>Cancel</button>
       <button 
         type="button" 
         onClick={addQuestionToLocalState}
+        className="add-question-btn"
         disabled={!currentQuestion.text || currentQuestion.options.some(opt => !opt) || currentQuestion.correctOption === -1}
       >
         Add Another Question
@@ -285,6 +287,7 @@ const renderQuestionsForm = () => (
       <button 
         type="button" 
         onClick={handleFinishQuiz}
+        className="finish-btn"
         //disabled={!Object.keys(localQuizState.quiz.questions).length} //forse qualche controllo dovrò metterlo qui
         >
         Finish Quiz
