@@ -187,5 +187,44 @@ export const createCompleteQuiz = createAsyncThunk(
     }
   }
 );
+export const fetchQuizDetails = async (quizId: number, token: string) => {
+  try {
+    // First get the quiz with its questions
+    const quizResponse = await axios.get(
+      `https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/GetQuizById/${quizId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    
+    const quiz = quizResponse.data;
+    
+    // For each question, fetch its options
+    const questions = quiz.quizQuestions.$values;
+    for (const questionData of questions) {
+      const questionId = questionData.question.id;
+      const optionsResponse = await axios.get(
+        `https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/GetOptionsByQuestionId/${questionId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      
+      // Add the options to the question object
+      questionData.question.options = optionsResponse.data;
+    }
+    
+    console.log('Complete quiz with options:', quiz);
+    return quiz;
+  } catch (error) {
+    console.error('Failed to fetch quiz details:', error);
+    throw error;
+  }
+};
+
 
 

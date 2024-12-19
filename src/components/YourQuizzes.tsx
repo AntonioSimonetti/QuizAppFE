@@ -3,6 +3,7 @@ import "../styles/YourQuizzes.css";
 import removeIcon from "../assets/remove-icon.svg";
 import editIcon from "../assets/edit-icon.svg";
 import homeBtnIcon from "../assets/house-btn-icon.svg";
+import QuizView from './QuizView';
 import { Quiz } from '../interfaces/quiz';
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
@@ -16,6 +17,8 @@ const YourQuizzes = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const quizzesPerPage = 5;
   const dispatch = useDispatch<AppDispatch>();
+  const [selectedQuiz, setSelectedQuiz] = useState<Quiz | null>(null);
+
 
 
   // Selettori per Redux
@@ -202,7 +205,10 @@ const handleFinishQuiz = async () => {
 // Funzione per renderizzare il form di creazione del quiz
 const renderTitleForm = () => (
   <form onSubmit={handleTitleSubmit} className="quiz-form">
-    <h2 id="HeaderNewQuiz">New Quiz</h2>
+    <div id="header-new-quiz-div">
+      <h1 id="HeaderNewQuiz">Create Quiz</h1>
+      <div className="Line-two"></div>
+    </div>
     <div className="form-group">
       <label htmlFor="quizTitle" id="labelId">Title:</label>
       <input
@@ -224,11 +230,9 @@ const renderTitleForm = () => (
 // Funzione per renderizzare il form di creazione delle domande e opzioni
 const renderQuestionsForm = () => (
   <div className="questions-form">
-    <h2>Add Questions</h2>
-    <p>Current Quiz: {localQuizState.quizzes[localQuizState.currentQuizId]?.title}</p>
+    <h2>Add a Question:</h2>
     
     <div className="form-group">
-      <label htmlFor="questionText">Question:</label>
       <input
         type="text"
         id="questionText"
@@ -238,43 +242,84 @@ const renderQuestionsForm = () => (
           text: e.target.value
         }))}
         placeholder="Enter your question"
+        autoComplete="off"
       />
     </div>
 
-    {currentQuestion.options.map((option, index) => (
-      <div key={index} className="option-group">
-        <label htmlFor={`option${index}`}>Option {index + 1}:</label>
-        <div className="option-input-group">
-          <input
-            type="text"
-            id={`option${index}`}
-            value={option}
-            onChange={(e) => {
-              const newOptions = [...currentQuestion.options];
-              newOptions[index] = e.target.value;
-              setCurrentQuestion(prev => ({
+  <div className="options-container">
+    <div className="column">
+      {currentQuestion.options.slice(0, 2).map((option, index) => (
+        <div key={index} className="option-group">
+          <label htmlFor={`option${index}`} className="label-option">Option {index + 1}:</label>
+          <div className="option-input-group">
+            <input
+              type="text"
+              id={`option${index}`}
+              value={option}
+              onChange={(e) => {
+                const newOptions = [...currentQuestion.options];
+                newOptions[index] = e.target.value;
+                setCurrentQuestion(prev => ({
+                  ...prev,
+                  options: newOptions
+                }));
+              }}
+              placeholder={`Enter option ${index + 1}`}
+              autoComplete="off"
+              className="option-input"
+            />
+            
+            <input
+              type="radio"
+              name="correctOption"
+              checked={currentQuestion.correctOption === index}
+              onChange={() => setCurrentQuestion(prev => ({
                 ...prev,
-                options: newOptions
-              }));
-            }}
-            placeholder={`Enter option ${index + 1}`}
-          />
-          <input
-            type="radio"
-            name="correctOption"
-            id="radioBtn"
-            checked={currentQuestion.correctOption === index}
-            onChange={() => setCurrentQuestion(prev => ({
-              ...prev,
-              correctOption: index
-            }))}
-          />
+                correctOption: index
+              }))}
+            />
+          </div>
         </div>
-      </div>
-    ))}
+      ))}
+    </div>
+    <div className="column">
+      {currentQuestion.options.slice(2).map((option, index) => (
+        <div key={index + 2} className="option-group">
+          <label htmlFor={`option${index + 2}`}className="label-option">Option {index + 3}:</label>
+          <div className="option-input-group">
+            <input
+              type="text"
+              id={`option${index + 2}`}
+              value={option}
+              onChange={(e) => {
+                const newOptions = [...currentQuestion.options];
+                newOptions[index + 2] = e.target.value;
+                setCurrentQuestion(prev => ({
+                  ...prev,
+                  options: newOptions
+                }));
+              }}
+              placeholder={`Enter option ${index + 3}`}
+              autoComplete="off"
+              className="option-input"
+            />
+            <input
+              type="radio"
+              name="correctOption"
+              checked={currentQuestion.correctOption === index + 2}
+              onChange={() => setCurrentQuestion(prev => ({
+                ...prev,
+                correctOption: index + 2
+              }))}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
 
     <div className="form-buttons">
-      <button type="button" className="back-btn" onClick={() => setCurrentStep('title')}>Back</button>
       <button type="button" className="cancel-btn" onClick={toggleModal}>Cancel</button>
       <button 
         type="button" 
@@ -296,7 +341,10 @@ const renderQuestionsForm = () => (
   </div>
 );
 
-
+const handleQuizClick = (quiz: Quiz) => {
+  setSelectedQuiz(quiz);
+};
+/*
 return (
   <div className="main-div">
     {!showModal ? (
@@ -353,6 +401,75 @@ return (
     )}
   </div>
   )
+*/
+
+return (
+  <div className="main-div">
+    {showModal ? (
+      <div className="modal-overlay">
+        <div className="modal-content">
+          {currentStep === 'title' ? renderTitleForm() : renderQuestionsForm()}
+        </div>
+      </div>
+    ) : selectedQuiz ? (
+      <QuizView 
+        quiz={selectedQuiz} 
+        onBack={() => setSelectedQuiz(null)} 
+      />
+    ) : (
+      <>
+        <div id="your-quizzes-top-div">
+          <h1>Your Quizzes</h1>
+          <div className="Line-two"></div>
+        </div>
+        
+        {status === 'loading' && <div>Loading...</div>}
+        {error && <div>Error: {error}</div>}
+        
+        <div id="quizzes-container">
+          {quizzesToShow.map((quiz: Quiz) => (
+            <div 
+              className="single-quiz-container" 
+              key={quiz.id}
+              onClick={() => handleQuizClick(quiz)}
+              style={{ cursor: 'pointer' }}
+            >
+              <div className="single-quiz-para">
+                <p title={quiz.title}>{truncateTitle(quiz.title)}</p>
+              </div>
+              <div className="remove-icon" onClick={(e) => {
+                e.stopPropagation();
+                handleDelete(quiz.id);
+              }}
+                style={deletingQuizId === quiz.id ? blinkAnimation : {}}
+              >
+                <img src={removeIcon} className="icon" alt="remove icon" />
+              </div>
+              <div className="edit-icon">
+                <img src={editIcon} className="icon" alt="edit icon" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="pagination-buttons">
+          <button onClick={previousPage} disabled={currentPage === 0}>
+            &lt;
+          </button>
+          <button onClick={nextPage} disabled={endIndex >= quizzes.length}>
+            &gt;
+          </button>
+        </div>
+
+        <div className="create-quiz-btn" onClick={toggleModal}>
+          <img src={homeBtnIcon} className="icon" alt="icon inside button"/>
+          <p>Create new quiz</p>
+        </div>
+      </>
+    )}
+  </div>
+);
+
 }
 
 export default YourQuizzes;
