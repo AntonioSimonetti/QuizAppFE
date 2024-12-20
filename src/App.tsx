@@ -55,18 +55,33 @@ function App() {
     return <div>Loading...</div>;
   }
 
-
+{/*
   return (
     <Router>
       <Routes>
         <Route path="/" element={isLoggedIn ? <Homepage /> : <Navigate to="/signin" />} />
-        <Route path="/signup" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} /> {/*  queste rotte da rivedere*/} 
-        <Route path="/signin" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} />
+        <Route path="/signup" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} /> 
       </Routes>
         {isLoggedIn && <div id='nav-container'><Navbar /></div>}
     </Router>
 
-  );
+  );*/}
+  return (
+    <Router>
+      <div className="app-container">
+        <div className="content-wrapper">
+          <Routes>
+            <Route path="/" element={isLoggedIn ? <Homepage /> : <Navigate to="/signin" />} />
+            <Route path="/signup" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} />
+            <Route path="/signin" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} />
+          </Routes>
+        </div>
+        {isLoggedIn && <div id='nav-container'><Navbar /></div>}
+      </div>
+    </Router>
+);
+  
+
 }
 
 export default App;

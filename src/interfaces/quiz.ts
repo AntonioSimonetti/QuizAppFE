@@ -62,3 +62,25 @@ export const initialQuizState: LocalQuizState = {
     quizzes: {},
     currentQuizId: 0
   };
+
+export default  interface QuestionFormProps {
+    currentQuestion: {
+        text: string;
+        options: string[];
+        correctOption: number;
+    };
+    onQuestionChange: (question: {
+        text: string;
+        options: string[];
+        correctOption: number;
+    }) => void;
+    onAddQuestion: () => void;
+    onFinishQuiz: () => void;
+    onCancel: () => void;
+}
+
+export interface CurrentQuestion {
+  text: string;
+  options: string[];
+  correctOption: number;
+}

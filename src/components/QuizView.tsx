@@ -4,6 +4,8 @@ import '../styles/QuizView.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { fetchQuizDetails } from '../services/quizzes';
+import Navbar from '../components/Navbar';
+
 
 interface QuizViewProps {
   quiz: Quiz;
@@ -96,8 +98,11 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
       
     const currentQuestion = quizDetails.quizQuestions.$values[currentQuestionIndex];
 
-      
+    const truncateText = (text: string, maxLength: number = 17) => {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+  };  
     return (
+    
         <div className="quiz-view">
           <div className="quiz-view-header">
             <div id="header-new-quiz-div">
@@ -115,7 +120,7 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
                         Next
                     </span>
                 </div>
-                    <h1 id="HeaderNewQuiz">{quiz.title}</h1>
+                    <h1 id="HeaderNewQuiz">{truncateText(quiz.title)}</h1>
                     <div className="Line-three"></div>
             </div>
             <p className='question-counter'>{currentQuestionIndex + 1} / {quizDetails.quizQuestions.$values.length}</p>
@@ -144,6 +149,7 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
             </div>
           </div>
         </div>
+      
       );
   };
         

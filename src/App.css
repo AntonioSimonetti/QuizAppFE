@@ -6,3 +6,28 @@
 }
 
 
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+
+}
+
+.content-wrapper {
+  flex: 1;
+  padding-bottom: 5rem; /* Height of navbar */
+}
+
+#nav-container {
+  margin-top: 20rem;
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background-color: #121211;
+  z-index: 1000;
+}
