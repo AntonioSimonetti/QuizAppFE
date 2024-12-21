@@ -8,7 +8,6 @@ import { useEffect }  from 'react'
 import { userAuthenticated, setValidating, logout  } from './store/authenticationSlice';
 import { RootState } from './store/store';
 import { validateToken } from './services/authentication';
-import { store } from './store/store';
 
 
 
@@ -17,7 +16,7 @@ import { store } from './store/store';
 function App() {
   const {isLoggedIn, isValidating } = useSelector((state:RootState) => state.authenticationSlice);
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
   
@@ -55,17 +54,6 @@ function App() {
     return <div>Loading...</div>;
   }
 
-{/*
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={isLoggedIn ? <Homepage /> : <Navigate to="/signin" />} />
-        <Route path="/signup" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} /> 
-      </Routes>
-        {isLoggedIn && <div id='nav-container'><Navbar /></div>}
-    </Router>
-
-  );*/}
   return (
     <Router>
       <div className="app-container">

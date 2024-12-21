@@ -1,5 +1,6 @@
 import "../styles/PublicQuizzes.css";
 
+
 const PublicQuizzes = () => {
     return (
       <div className="main-div">

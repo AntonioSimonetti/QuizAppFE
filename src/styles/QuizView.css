@@ -56,20 +56,21 @@
 
   .question-div {
     border-radius: 16px;
-    width: 346px;
-    height: 154px;
+    width: 242px;
+    height: 108px;
     background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55));
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 16px;
     padding: 2rem;
+    font-size: 1px;
 
   }
 
   .question-div > h3 {
     color: #121211;
-    font-size: 16px;
+    font-size: 12px;
   }
   
   .question-container {
@@ -124,8 +125,8 @@
   }
   
   .option-div {
-    height: 75px;
-    width: 346px;
+    height: 50px;
+    width: 242px;
     border-radius: 16px;
     background-color: #252525;
     display: flex;

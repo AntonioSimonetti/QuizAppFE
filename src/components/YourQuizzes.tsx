@@ -30,7 +30,6 @@ import { Quiz, LocalQuizState, initialQuizState } from '../interfaces/quiz';
 import { useQuizValidation } from "../hooks/useQuizValidation";
 import { useQuizPagination } from "../hooks/useQuizPagination";
 
-
 const YourQuizzes = () => {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -41,6 +40,8 @@ const YourQuizzes = () => {
   const [currentStep, setCurrentStep] = useState<'title' | 'questions'>('title'); // stato per renderizzare il componente giusto nel modale
   const [localQuizState, setLocalQuizState] = useState<LocalQuizState>(initialQuizState); // stato per salvare localmente il quiz creato dall'utente
   const [currentQuestion, setCurrentQuestion] = useState({ text: '',options: ['', '', '', ''], correctOption: -1}); // stato per salvare la domanda corrente create dall'user
+  const [isCreatingQuiz, setIsCreatingQuiz] = useState(false);
+
 
   // Selettori per lo stato globale
   const token = useSelector((state: RootState) => { return state.authenticationSlice.token;});
@@ -166,7 +167,7 @@ const YourQuizzes = () => {
     if (isFormFilled) {
       addQuestionToLocalState();
     }
-
+    setIsCreatingQuiz(true);
     try {
       await dispatch(createCompleteQuiz({
         quizData: localQuizState,
@@ -192,7 +193,9 @@ const YourQuizzes = () => {
     } catch (error) {
       console.error('Failed to create quiz:', error);
       // Aggiungere un errore da mostrare all'utente
-    }
+    } finally {
+      setIsCreatingQuiz(false);
+  }
   };
 
   // Fn che seleziona il quiz da mostrare in QuizView
@@ -200,6 +203,7 @@ const YourQuizzes = () => {
     setSelectedQuiz(quiz);
   };
 
+{/*
 return (
   <div className="main-div">
     {showModal ? (
@@ -280,7 +284,99 @@ return (
       </>
     )}
   </div>
+); */
+return (
+  <div className="main-div">
+    {isCreatingQuiz && (
+      <>
+        <div className="creating-quiz-line"></div>
+        <div className="creating-quiz-text">Creating Quiz...</div>
+      </>
+    )}
+    {!isCreatingQuiz && (
+      <>
+        {showModal ? (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              {validationError && <p className="validation-error">{validationError}</p>}
+              {currentStep === 'title' ? ( 
+                <TitleForm 
+                  title={localQuizState.quizzes[localQuizState.currentQuizId]?.title || ''}
+                  onTitleChange={handleTitleChange}
+                  onSubmit={handleTitleSubmit}
+                  onCancel={toggleModal}
+                /> ) : (
+                <QuestionForm 
+                  currentQuestion={currentQuestion}
+                  onQuestionChange={setCurrentQuestion}
+                  onAddQuestion={addQuestionToLocalState}
+                  onFinishQuiz={handleFinishQuiz}
+                  onCancel={toggleModal}
+                />
+              )}
+            </div>
+          </div>
+        ) : selectedQuiz ? (
+          <QuizView 
+            quiz={selectedQuiz} 
+            onBack={() => setSelectedQuiz(null)} 
+          />
+        ) : (
+          <>
+            <div id="your-quizzes-top-div">
+              <h1>Your Quizzes</h1>
+              <div className="Line-two"></div>
+            </div>
+            
+            {status === 'loading' && <div>Loading...</div>}
+            {error && <div>Error: {error}</div>}
+            
+            <div id="quizzes-container">
+              {quizzesToShow.map((quiz: Quiz) => (
+                <div 
+                  className="single-quiz-container" 
+                  key={quiz.id}
+                  onClick={() => handleQuizClick(quiz)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <div className="single-quiz-para">
+                    <p title={quiz.title}>{truncateTitle(quiz.title)}</p>
+                  </div>
+                  <div className="remove-icon" onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(quiz.id);
+                  }}
+                    style={deletingQuizId === quiz.id ? blinkAnimation : {}}
+                  >
+                    <img src={removeIcon} className="icon" alt="remove icon" />
+                  </div>
+                  <div className="edit-icon">
+                    <img src={editIcon} className="icon" alt="edit icon" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="pagination-buttons">
+              <button onClick={previousPage} disabled={!hasPreviousPage}>
+                &lt;
+              </button>
+              <button onClick={nextPage} disabled={!hasNextPage}>
+                &gt;
+              </button>
+            </div>
+
+            <div className="create-quiz-btn" onClick={toggleModal}>
+              <img src={homeBtnIcon} className="icon" alt="icon inside button"/>
+              <p>Create new quiz</p>
+            </div>
+          </>
+        )}
+      </>
+    )}
+  </div>
 );
+}
 
 }
 

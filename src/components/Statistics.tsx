@@ -1,5 +1,6 @@
 import "../styles/Statistics.css";
 
+
 const Statistics = () => {
     return (
       <div className="main-div">

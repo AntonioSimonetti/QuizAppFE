@@ -84,3 +84,31 @@ export interface CurrentQuestion {
   options: string[];
   correctOption: number;
 }
+
+export interface QuizViewProps {
+  quiz: Quiz;
+  onBack: () => void;
+}
+
+export interface QuizDetails {
+  quizQuestions: {
+    $values: Array<{
+      question: {
+        text: string;
+        correctAnswerIndex: number;
+        options: {
+          $values: Array<{
+            text: string;
+          }>;
+        };
+      };
+    }>;
+  };
+}
+
+
+export interface QuizResultsProps {
+  userAnswers: Record<number, number>;
+  quizDetails: any;
+  onBack: () => void;
+}
