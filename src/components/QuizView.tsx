@@ -1,18 +1,33 @@
+// React and Hooks
 import { useEffect, useState } from 'react';
-import { QuizViewProps, QuizDetails } from '../interfaces/quiz';
-import '../styles/QuizView.css';
 import { useSelector } from 'react-redux';
+
+// Interfaces and Types
+import { QuizViewProps, QuizDetails } from '../interfaces/quiz';
 import { RootState } from '../store/store';
+
+// Services & Utils
 import { fetchQuizDetails } from '../services/quizzes';
+import { truncateText } from '../utils/helpers';
+
+// Components
 import QuizResults from './QuizResults';
 
+// Styles
+import '../styles/QuizView.css';
+
+
 const QuizView = ({ quiz, onBack }: QuizViewProps) => {
-  const [quizDetails, setQuizDetails] = useState<QuizDetails | null>(null);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [userAnswers, setUserAnswers] = useState<Record<number, number>>({});
-  const [isQuizComplete, setIsQuizComplete] = useState(false);
+
+  const [quizDetails, setQuizDetails] = useState<QuizDetails | null>(null); // Formatta i dati del quiz per poterli utilizzare nel componente
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);  // Tiene traccia a che domanda del quiz è l'utente
+  const [userAnswers, setUserAnswers] = useState<Record<number, number>>({}); // Tiene traccia delle risposte dell'utente
+  const [isQuizComplete, setIsQuizComplete] = useState(false); // Tiene traccia se il quiz è stato finito oppure no
+
+  // Selettore Redux
   const token = useSelector((state: RootState) => state.authenticationSlice.token);
 
+  // Fetch dei dettagli del quiz al montaggio del componente
   useEffect(() => {
     const loadQuizDetails = async () => {
       const details = await fetchQuizDetails(quiz.id, token);
@@ -22,6 +37,7 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
     loadQuizDetails();
   }, [quiz.id, token]);
 
+  // Si occupa di tenere traccia delle risposte dell'user durante il quiz
   const handleAnswerSelect = (optionIndex: number) => {
     if (!quizDetails || userAnswers[currentQuestionIndex] !== undefined) {
       return;
@@ -38,6 +54,7 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
       ? quizDetails.quizQuestions.$values.findIndex((_, i) => updatedAnswers[i] === undefined)
       : -1;
 
+    // Delay per dare un feedback all'user prima di passare alla domanda successiva
     setTimeout(() => {
       if (unansweredIndex !== -1) {
         setCurrentQuestionIndex(unansweredIndex);
@@ -47,6 +64,7 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
     }, 2000);
   };
 
+  // Utility fn per dare un feedback sulla scelta effettuata dall' user (giusta/sbagliata) 
   const getOptionClassName = (questionIndex: number, optionIndex: number): string => {
     if (!quizDetails || userAnswers[questionIndex] === undefined) {
       return "option-div";
@@ -61,14 +79,12 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
     return "option-div";
   };
 
-  const truncateText = (text: string, maxLength: number = 17): string => {
-    return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
-  };
-
+  // Loading del componente
   if (!quizDetails) {
     return <div className="quiz-loading">Loading quiz...</div>;
   }
 
+  // Se il componente è vuoto
   if (quizDetails.quizQuestions.$values.length === 0) {
     return (
       <div className="quiz-empty">
@@ -81,6 +97,7 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
     );
   }
 
+  // Mostra il componente che organizza i risultati del quiz
   if (isQuizComplete) {
     return (
       <QuizResults 
@@ -91,6 +108,7 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
     );
   }
 
+  // Current Question Data
   const currentQuestion = quizDetails.quizQuestions.$values[currentQuestionIndex];
 
   return (

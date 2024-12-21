@@ -203,88 +203,6 @@ const YourQuizzes = () => {
     setSelectedQuiz(quiz);
   };
 
-{/*
-return (
-  <div className="main-div">
-    {showModal ? (
-      <div className="modal-overlay">
-        <div className="modal-content">
-          {validationError && <p className="validation-error">{validationError}</p>}
-          {currentStep === 'title' ? ( 
-            <TitleForm 
-              title={localQuizState.quizzes[localQuizState.currentQuizId]?.title || ''}
-              onTitleChange={handleTitleChange}
-              onSubmit={handleTitleSubmit}
-              onCancel={toggleModal}
-            /> ) : (
-            <QuestionForm 
-              currentQuestion={currentQuestion}
-              onQuestionChange={setCurrentQuestion}
-              onAddQuestion={addQuestionToLocalState}
-              onFinishQuiz={handleFinishQuiz}
-              onCancel={toggleModal}
-            />
-          )}
-        </div>
-      </div>
-    ) : selectedQuiz ? (
-      <QuizView 
-        quiz={selectedQuiz} 
-        onBack={() => setSelectedQuiz(null)} 
-      />
-    ) : (
-      <>
-        <div id="your-quizzes-top-div">
-          <h1>Your Quizzes</h1>
-          <div className="Line-two"></div>
-        </div>
-        
-        {status === 'loading' && <div>Loading...</div>}
-        {error && <div>Error: {error}</div>}
-        
-        <div id="quizzes-container">
-          {quizzesToShow.map((quiz: Quiz) => (
-            <div 
-              className="single-quiz-container" 
-              key={quiz.id}
-              onClick={() => handleQuizClick(quiz)}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="single-quiz-para">
-                <p title={quiz.title}>{truncateTitle(quiz.title)}</p>
-              </div>
-              <div className="remove-icon" onClick={(e) => {
-                e.stopPropagation();
-                handleDelete(quiz.id);
-              }}
-                style={deletingQuizId === quiz.id ? blinkAnimation : {}}
-              >
-                <img src={removeIcon} className="icon" alt="remove icon" />
-              </div>
-              <div className="edit-icon">
-                <img src={editIcon} className="icon" alt="edit icon" />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="pagination-buttons">
-          <button onClick={previousPage} disabled={!hasPreviousPage}>
-            &lt;
-          </button>
-          <button onClick={nextPage} disabled={!hasNextPage}>
-             &gt;
-          </button>
-        </div>
-
-        <div className="create-quiz-btn" onClick={toggleModal}>
-          <img src={homeBtnIcon} className="icon" alt="icon inside button"/>
-          <p>Create new quiz</p>
-        </div>
-      </>
-    )}
-  </div>
-); */
 return (
   <div className="main-div">
     {isCreatingQuiz && (
@@ -378,6 +296,5 @@ return (
 );
 }
 
-}
 
 export default YourQuizzes;
