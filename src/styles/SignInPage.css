@@ -45,6 +45,10 @@
     background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55)); 
 }
 
+.Line.authenticating {
+    animation: authBlinking 1.5s ease-in-out infinite;
+}
+
 .Login-btn-div {
     display: flex;
     flex-direction: row;
@@ -176,4 +180,42 @@ input:-webkit-autofill {
    font-size: 12px !important;
    color:#eaeaea75 ;
    cursor: pointer;
+}
+
+.error-message {
+    color: #ff4444;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: rgba(255, 68, 68, 0.1);
+    width: 100%;
+}
+
+.resend-button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #121212;
+    border: 1px solid #ff4444;
+    color: #ff4444;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.resend-button:hover {
+    background-color: rgba(255, 68, 68, 0.1);
+}
+
+
+@keyframes authBlinking {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
 }

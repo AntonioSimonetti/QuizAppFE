@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthPayload, AuthState, initialState } from "../interfaces/auth";
+import { store, RESET_STORE, resetStore } from './store';
 
 export const authenticationSlice = createSlice({
     name: "authentication",
@@ -18,13 +19,13 @@ export const authenticationSlice = createSlice({
             state.isValidating = action.payload; 
           },
         logout: (state: AuthState) => {
-            localStorage.clear();
-            state.token = "";
-            state.isLoggedIn = false;
-            state.email = "";
-            state.userId = "";
-            state.usernameAndEmail = "";
-            state.valid = false;
+                localStorage.clear();
+                state.token = "";
+                state.isLoggedIn = false;
+                state.email = "";
+                state.userId = "";
+                state.usernameAndEmail = "";
+                state.valid = false;
         },
         emailConfirmed: (state: AuthState) => {
             state.isLoggedIn = false;
@@ -32,6 +33,11 @@ export const authenticationSlice = createSlice({
    
     }
 });
+
+export const logoutAndResetStore = () => (dispatch: any) => {
+    dispatch(logout());
+    dispatch(resetStore());
+};
 
 export const { userAuthenticated, logout, setValidating, emailConfirmed  } = authenticationSlice.actions;
 

@@ -437,3 +437,12 @@ input[type="radio"]:hover {
     50% { opacity: 0.3; }
     100% { opacity: 1; }
 }
+
+
+
+@media screen and (min-width: 768px) {
+  .main-div.active-component {
+    margin-bottom: -20rem;
+  }
+
+}

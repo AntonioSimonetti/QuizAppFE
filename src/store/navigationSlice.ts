@@ -1,20 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NavigationState } from '../interfaces/navigation';
 
-const initialState: NavigationState = {
+export const initialNavigationState: NavigationState = {
   activeComponent: null,
+  activeSubComponent: null
 };
 
 const navigationSlice = createSlice({
   name: 'navigation',
-  initialState,
+  initialState: initialNavigationState,
   reducers: {
     setActiveComponent: (state, action: PayloadAction<string | null>) => {
       state.activeComponent = action.payload;
     },
+    setActiveSubComponent: (state, action) => {
+      state.activeSubComponent = action.payload;
+    }
   },
 });
 
-export const { setActiveComponent } = navigationSlice.actions;
+export const { setActiveComponent, setActiveSubComponent } = navigationSlice.actions;
 
 export default navigationSlice.reducer;

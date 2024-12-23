@@ -1,6 +1,8 @@
 // React and Hooks
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setActiveSubComponent } from '../store/navigationSlice';
 
 // Interfaces and Types
 import { QuizViewProps, QuizDetails } from '../interfaces/quiz';
@@ -18,6 +20,7 @@ import '../styles/QuizView.css';
 
 
 const QuizView = ({ quiz, onBack }: QuizViewProps) => {
+  const dispatch = useDispatch();
 
   const [quizDetails, setQuizDetails] = useState<QuizDetails | null>(null); // Formatta i dati del quiz per poterli utilizzare nel componente
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);  // Tiene traccia a che domanda del quiz è l'utente
@@ -26,6 +29,15 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
 
   // Selettore Redux
   const token = useSelector((state: RootState) => state.authenticationSlice.token);
+
+  // Imposta il subcomponent su QuizView, ci serve in questo caso per applicare dello style dinamico
+  useEffect(() => {
+    dispatch(setActiveSubComponent('QuizView'));
+    
+    return () => {
+      dispatch(setActiveSubComponent(null));
+    };
+  }, [dispatch]);
 
   // Fetch dei dettagli del quiz al montaggio del componente
   useEffect(() => {

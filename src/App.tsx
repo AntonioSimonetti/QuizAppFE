@@ -15,6 +15,21 @@ import { validateToken } from './services/authentication';
 
 function App() {
   const {isLoggedIn, isValidating } = useSelector((state:RootState) => state.authenticationSlice);
+  const activeComponent = useSelector((state: RootState) => state.navigationSlice.activeComponent);
+  const activeSubComponent = useSelector((state: RootState) => state.navigationSlice.activeSubComponent);
+
+  /*
+  useEffect(() => {
+    const navContainer = document.getElementById('nav-container');
+    const hasActiveClass = navContainer?.classList.contains('active-component');
+    console.log({
+      activeComponent,
+      activeSubComponent,
+      hasActiveClass,
+      'condition met': activeComponent === 'YourQuizzes' && activeSubComponent === 'QuizView'
+    });
+  }, [activeComponent, activeSubComponent]);
+  */
   const dispatch = useDispatch();
   
   useEffect(() => {
@@ -46,9 +61,6 @@ function App() {
       });
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log("isValidating changed:", isValidating);
-  }, [isValidating]);
 
   if (isValidating) {
     return <div>Loading...</div>;
@@ -64,7 +76,9 @@ function App() {
             <Route path="/signin" element={isLoggedIn ? <Navigate to="/" /> : <SignInPage />} />
           </Routes>
         </div>
-        {isLoggedIn && <div id='nav-container'><Navbar /></div>}
+        {isLoggedIn && <div id='nav-container'
+          className={activeComponent === 'YourQuizzes' && activeSubComponent === 'QuizView' ? 'active-component' : ''}
+          ><Navbar /></div>}
       </div>
     </Router>
 );

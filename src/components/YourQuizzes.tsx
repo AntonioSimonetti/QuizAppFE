@@ -203,9 +203,11 @@ const YourQuizzes = () => {
     setSelectedQuiz(quiz);
   };
 
+
+
 return (
-  <div className="main-div">
-    {isCreatingQuiz && (
+<div className={`main-div ${!selectedQuiz ? 'active-component' : ''}`}>
+{isCreatingQuiz && (
       <>
         <div className="creating-quiz-line"></div>
         <div className="creating-quiz-text">Creating Quiz...</div>
