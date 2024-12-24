@@ -109,6 +109,7 @@ const YourQuizzes = () => {
         ...prev.quizzes,
         [prev.currentQuizId]: {
           title: e.target.value,
+          isPublic: prev.quizzes[prev.currentQuizId]?.isPublic || false,
           questions: {}
         }
       }
@@ -203,7 +204,19 @@ const YourQuizzes = () => {
     setSelectedQuiz(quiz);
   };
 
-
+  const toggleIsPublic = () => { // forse la cancello e lascio cosi la gestione del cambio ispublic nella creazione
+    setLocalQuizState(prev => ({
+      ...prev,
+      quizzes: {
+        ...prev.quizzes,
+        [prev.currentQuizId]: {
+          ...prev.quizzes[prev.currentQuizId],
+          isPublic: !prev.quizzes[prev.currentQuizId]?.isPublic 
+        }
+      }
+    }));
+  };
+  
 
 return (
 <div className={`main-div ${!selectedQuiz ? 'active-component' : ''}`}>
@@ -225,6 +238,19 @@ return (
                   onTitleChange={handleTitleChange}
                   onSubmit={handleTitleSubmit}
                   onCancel={toggleModal}
+                  isPublic={localQuizState.quizzes[localQuizState.currentQuizId]?.isPublic || false}
+                  onTogglePublic={(isPublic) => {
+                    setLocalQuizState(prev => ({
+                      ...prev,
+                      quizzes: {
+                        ...prev.quizzes,
+                        [prev.currentQuizId]: {
+                          ...prev.quizzes[prev.currentQuizId],
+                          isPublic
+                        }
+                      }
+                    }));
+                  }}
                 /> ) : (
                 <QuestionForm 
                   currentQuestion={currentQuestion}

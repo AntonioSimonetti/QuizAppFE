@@ -29,6 +29,23 @@ export const fetchQuizzesByUserId = async (userId: string, token: string, dispat
   }
 };
 
+export const fetchPublicQuizzes = async (token: string) => {
+  try {
+    const response = await axios.get(
+      "https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/public",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.$values;
+  } catch (error) {
+    console.error("Failed to fetch public quizzes:", error);
+    throw error;
+  }
+};
+
 
 export const deleteQuizById = async (userId: string, quizId: number, token: string, dispatch: AppDispatch) => {
   try {
@@ -80,7 +97,7 @@ export const createCompleteQuiz = createAsyncThunk(
         {
           id: 0,
           title: currentQuiz.title,
-          isPublic: true,
+          isPublic: currentQuiz.isPublic,
           timelimit: 0,
           userId: userId
         },
@@ -187,6 +204,7 @@ export const createCompleteQuiz = createAsyncThunk(
     }
   }
 );
+
 export const fetchQuizDetails = async (quizId: number, token: string) => {
   try {
     // First get the quiz with its questions

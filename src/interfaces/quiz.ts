@@ -47,6 +47,7 @@ export const initialStateQuiz: QuizzesState = {
 export interface LocalQuizState {
     quizzes: Record<number, {
       title: string;
+      isPublic:boolean;
       questions: Record<number, {
         text: string;
         options: Record<number, {
