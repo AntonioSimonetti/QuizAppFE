@@ -17,6 +17,8 @@ import { RootState } from '../store/store';
 import YourQuizzes from './YourQuizzes';
 import PublicQuizzes from './PublicQuizzes'; 
 import Statistics from './Statistics'; 
+import Profile from './Profile';
+
 import WaveTransition from './WaveTransition';
 
 const Homepage = () => {
@@ -50,6 +52,7 @@ const Homepage = () => {
       {(shouldRenderNext && activeComponent === "YourQuizzes") && <YourQuizzes />}
       {(shouldRenderNext && activeComponent === "PublicQuizzes") && <PublicQuizzes />}
       {(shouldRenderNext && activeComponent === "Statistics") && <Statistics />}
+      {activeComponent === "Profile" && <Profile />}
       
       {!shouldRenderNext && !activeComponent && (
         <div className='Homepage-main-div'>

@@ -186,8 +186,42 @@ export const resendConfirmationEmail = async (email: string) => {
     }
 };
 
+export const forgotPassword = async (email: string) => {
+    try {
+        const response = await axiosInstance.post("/forgotPassword", { email });
+        return response.data; 
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("Error in forgotPassword:", error);
+            // Gestiamo eventuali errori specifici di axios
+            return error.response?.data || { error: "An unexpected error occurred" };
+          }
+          // Gestione di errori generici
+          return { error: "An unexpected error occurred" };
+        }
+};
 
 
+export const resetPassword = async (email: string, resetCode: string, newPassword: string) => {
+    try {
+    const response = await axiosInstance.post("/resetPassword", {
+      email,
+      resetCode,
+      newPassword
+    });
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("Error in resetPassword:", error);
+      return error.response?.data || { error: "An unexpected error occurred" };
+    }
+  }
+};
+
+
+
+// Non dovrebbe stare qui??
 export const logout = (dispatch: AppDispatch) => {
     localStorage.removeItem("token")
     dispatch(logoutAction());

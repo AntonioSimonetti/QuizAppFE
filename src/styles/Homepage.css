@@ -17,7 +17,12 @@
     cursor: pointer;
     position: relative; 
     border-bottom: 2px solid transparent;
-    transition: box-shadow 0.3s ease; 
+    transition: box-shadow 0.3s ease, transform 0.1s ease-in-out;
+}
+
+.Your-quizzes-div:hover {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 .Your-quizzes-div::after {
@@ -39,6 +44,12 @@
 .Your-quizzes-div:hover::after {
     opacity: 1; 
 }
+
+.Your-quizzes-div:active, .Public-div:active, .Statistics-div:active, .Social-div:active, .Settings-div:active {
+    transform: scale(0.95); /* Riduce leggermente la dimensione */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Aggiunge un'ombra più soft */
+}
+
 
 .Your-quizzes-logo-div {
     width: 100%;
@@ -96,17 +107,67 @@
     cursor: pointer;
 }
 
+
 #Public-div{
     margin-right: 16px;
     background-color:  #F5FE37;
     color: #121211;
     font-size: 12px;
+    position: relative; 
+    transition: box-shadow 0.3s ease, transform 0.1s ease-in-out;
+}
+
+#Public-div:hover, #Statistics-div:hover {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+#Public-div::after {
+    content: ""; 
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: #FF5733; 
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px; 
+    box-shadow: 0 4px 10px rgba(255, 87, 51, 0.8), 
+                0 0 20px rgba(255, 87, 51, 0.8); 
+    transition: opacity 0.3s ease; 
+    opacity: 0; 
+}
+
+#Public-div:hover::after {
+    opacity: 1; 
 }
 
 #Statistics-div{
     color: #eaeaea;
     font-size: 12px;
     border: 1px solid #808080 !important;
+    position: relative;
+    transition: box-shadow 0.3s ease, transform 0.1s ease-in-out;
+}
+
+#Statistics-div::after {
+    content: ""; 
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: yellow;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px; 
+    box-shadow: 0 4px 10px rgba(255, 255, 0, 0.8),
+                0 0 20px rgba(255, 255, 0, 0.8); 
+    transition: opacity 0.3s ease; 
+    opacity: 0; 
+}
+
+#Statistics-div:hover::after {
+    opacity: 1;
 }
 
 .Public-div > .icon {
@@ -145,6 +206,33 @@
     background-color: #252525;
     margin-right: 14px;
     cursor: pointer;
+    position: relative;
+    transition: box-shadow 0.3s ease, transform 0.1s ease-in-out;
+}
+
+.Social-div:hover {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.Social-div::after {
+    content: ""; 
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: yellow;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px; 
+    box-shadow: 0 4px 10px rgba(255, 255, 0, 0.8),
+                0 0 20px rgba(255, 255, 0, 0.8); 
+    transition: opacity 0.3s ease; 
+    opacity: 0; 
+}
+
+.Social-div:hover::after {
+    opacity: 1;
 }
 
 .Settings-div{
@@ -157,6 +245,33 @@
     border-radius: 16px;
     background-color: #252525;
     cursor: pointer;
+    position: relative;
+    transition: box-shadow 0.3s ease, transform 0.1s ease-in-out;
+}
+
+.Settings-div:hover {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.Settings-div::after {
+    content: ""; 
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: yellow;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px; 
+    box-shadow: 0 4px 10px rgba(255, 255, 0, 0.8),
+                0 0 20px rgba(255, 255, 0, 0.8); 
+    transition: opacity 0.3s ease; 
+    opacity: 0; 
+}
+
+.Settings-div:hover::after {
+    opacity: 1;
 }
 
 #Social-div > p {
@@ -212,7 +327,7 @@
     margin-left: 16px;
     margin-top:-20px;
     margin-bottom: -30px;
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 .container-icon > .icon {
@@ -248,9 +363,6 @@
     margin-bottom: 2px;
 }
 
-.container-number-day{
-    cursor: pointer;
-}
 
 .monday-placeholder {
     width: 34px;

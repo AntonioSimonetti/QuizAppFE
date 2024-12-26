@@ -14,13 +14,17 @@ const Navbar = () => {
     dispatch(setActiveComponent(null));
   };
 
+  const handleGoToProfile = () => {
+    dispatch(setActiveComponent("Profile"));
+  };
+
   const handleLogout = () => {
     dispatch(logoutAndResetStore());
   };
 
   return (
     <nav className="navbar">
-        <div className="nav-first">
+        <div className="nav-first" onClick={handleGoToProfile}>
             <img src={firstIcon} className="icon" alt="First navbar icon" />
         </div>
         <div className="nav-second" onClick={handleGoHome}>

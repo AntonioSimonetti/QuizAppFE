@@ -67,7 +67,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+    cursor: pointer;
 }
+
+.Google-div:active, .Github-div:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
 
 .icon {
     width: 24px;
@@ -152,6 +161,12 @@ input:-webkit-autofill {
     color: #121212;
     margin-top: 38px;
     cursor: pointer;
+    transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+}
+
+.Submit-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .Bottom-div {
