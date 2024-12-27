@@ -75,7 +75,9 @@ const PublicQuizzes = () => {
                   onClick={() => handleQuizClick(quiz)}
                   style={{ cursor: 'pointer' }}
                 >
-                  <div className="single-quiz-para">
+                  <div className="single-quiz-para"        
+                   title={quiz.title}
+                  >
                     <p title={quiz.title}>{truncateTitle(quiz.title)}</p>
                   </div>
                  

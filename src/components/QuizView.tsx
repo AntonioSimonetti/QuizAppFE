@@ -26,6 +26,7 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);  // Tiene traccia a che domanda del quiz è l'utente
   const [userAnswers, setUserAnswers] = useState<Record<number, number>>({}); // Tiene traccia delle risposte dell'utente
   const [isQuizComplete, setIsQuizComplete] = useState(false); // Tiene traccia se il quiz è stato finito oppure no
+  const [showTitleModal, setShowTitleModal] = useState(false);
 
   // Selettore Redux
   const token = useSelector((state: RootState) => state.authenticationSlice.token);
@@ -124,6 +125,7 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
   const currentQuestion = quizDetails.quizQuestions.$values[currentQuestionIndex];
 
   return (
+    <>
     <div className="quiz-view">
       <div className="quiz-view-header">
         <div id="header-new-quiz-div">
@@ -141,10 +143,17 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
               Next
             </span>
           </div>
-          <h1 id="HeaderNewQuiz">{truncateText(quiz.title)}</h1>
+          <div className="title-container" onClick={() => setShowTitleModal(true)}>
+              <h1 id="HeaderNewQuiz">{truncateText(quiz.title)}</h1>
+
+          </div>
           <div className="Line-three"></div>
+         
         </div>
         <p className='question-counter'>{currentQuestionIndex + 1} / {quizDetails.quizQuestions.$values.length}</p>
+        {quiz.title.length > 17 && (
+           <span className="expand-hint">Click to expand</span>
+          )}
       </div>
 
       <div className="quiz-content">
@@ -169,8 +178,29 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
         </div>
       </div>
     </div>
+    {showTitleModal && (
+      <div 
+          className="title-modal-overlay"
+          onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                  setShowTitleModal(false);
+              }
+          }}
+      >
+          <div className="title-modal">
+              <button 
+                  className="close-modal"
+                  onClick={() => setShowTitleModal(false)}
+              >
+                  ×
+              </button>
+              <h2>{quiz.title}</h2>
+          </div>
+      </div>
+      )}
+    </>
+    
   );
 };
 
 export default QuizView;
-

@@ -182,8 +182,120 @@
     cursor: default;
 }
 
+/* Add these new styles at the end of your existing CSS */
+
+/* Tooltip styles */
+#HeaderNewQuiz {
+    font-size: 32px;
+    position: relative;
+    cursor: pointer;
+    background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hint-counter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.expand-hint {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    margin-top: 3.2rem;
+    background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: pulse 2s infinite;
+}
 
 
+.title-tooltip {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #252525;
+    color: #eaeaea;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    pointer-events: none;
+}
+
+#HeaderNewQuiz:hover .title-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal styles */
+.title-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(18, 18, 17, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 100px;
+    z-index: 1000;
+}
+
+.title-modal {
+    background: #252525;
+    padding: 20px 30px;
+    border-radius: 16px;
+    max-width: 80%;
+    position: relative;
+    color: #eaeaea;
+    border: 2px solid;
+    border-image: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55)) 1;
+}
+
+.title-modal h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    word-break: break-word;
+    color: #eaeaea;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    color: #eaeaea;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.close-modal:hover {
+    color: #F5FE37;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
 
 @keyframes blink {
     0% { opacity: 1; }
