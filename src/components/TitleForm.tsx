@@ -1,3 +1,6 @@
+import "../styles/TitleForm.css";
+
+
 interface TitleFormProps {
     title: string;
     onTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -23,14 +26,16 @@ interface TitleFormProps {
           placeholder="Enter quiz title"
           required
         />
-         <label>
+        <div className="checkbox-container">
+          <label htmlFor="publicQuiz">Public Quiz</label>
           <input 
+            id="publicQuiz"
             type="checkbox" 
+            className="custom-checkbox"
             checked={isPublic} 
             onChange={(e) => onTogglePublic(e.target.checked)} 
-            />
-            Public Quiz
-        </label>
+          />
+        </div>
       </div>
       <div className="form-buttons">
         <button type="button" onClick={onCancel}>Cancel</button>

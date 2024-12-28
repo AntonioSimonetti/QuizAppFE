@@ -213,6 +213,11 @@ input:-webkit-autofill {
     width: 100%;
 }
 
+.error-message.success {
+    color: #00FF90;;
+    background-color: green;
+}
+
 .resend-button {
     margin-top: 10px;
     padding: 5px 10px;

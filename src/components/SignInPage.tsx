@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SignUp, SignIn, resendConfirmationEmail, resetPassword, forgotPassword } from "../services/authentication";
-import { validatePassword, validateConfirmPassword } from "../utils/helpers";
+import { validateEmail, validatePassword, validateConfirmPassword } from "../utils/helpers";
 
 const SignInPage = () => {
     const [login, setLogin] = useState(false);
@@ -34,53 +34,65 @@ const SignInPage = () => {
         event.preventDefault();
         setAuthError(null);
 
-        // Field validation
-        if (!email && !password) {
-            setAuthError('Email and password are required');
-            return;
-        }
-        if (!email) {
-            setAuthError('Email is required');
-            return;
-        }
-        if (!password) {
-            setAuthError('Password is required');
+        // Email validation
+        const emailError = validateEmail(email);
+        if (emailError) {
+            setAuthError(emailError);
             return;
         }
 
-        // Sign up specific validations
-        if (!login) {
-            if (!confirmPassword) {
-                setAuthError('Please confirm your password');
+        // Password validation
+        if (!login) {  // Solo per sign up
+            const passwordError = validatePassword(password);
+            if (passwordError) {
+                setAuthError(passwordError);
                 return;
             }
-            if (password !== confirmPassword) {
-                setAuthError('Passwords do not match');
+
+            const confirmError = validateConfirmPassword(password, confirmPassword);
+            if (confirmError) {
+                setAuthError(confirmError);
+                return;
+            }
+        } else {  // Per login
+            if (!password) {
+                setAuthError('Password is required');
                 return;
             }
         }
 
-        setIsAuthenticating(true); 
+        setIsAuthenticating(true);
 
-            try {
-                const data = login
-                    ? await SignIn(dispatch, { email, password })
-                    : await SignUp(dispatch, { email, password });
-
+        try {
+            if (login) {
+                const data = await SignIn(dispatch, { email, password });
                 if (data?.error) {
-                    const errorMessage = data.error === 'EMAIL_NOT_CONFIRMED' 
+                    const errorMessage = data.error === 'EMAIL_NOT_CONFIRMED'
                         ? 'Please confirm your email before logging in'
                         : data.error;
                     setAuthError(errorMessage);
                     return;
                 }
-                
-                navigate("/");     
-            } catch(error){
-                setAuthError("An unexpected error occurred. Please try again later.");
-            }finally {
-                setIsAuthenticating(false);
-            }  
+                navigate("/");
+            } else {
+                const result = await SignUp(dispatch, { email, password });
+                if (result?.error) {
+                    setAuthError(result.error);
+                    return;
+                }
+                if (result?.success) {
+                    setAuthError(result.message); // Using authError to display success message
+                    // Optional: reset form
+                    setEmail("");
+                    setPassword("");
+                    setConfirmPassword("");
+                }
+            }
+        } catch (error) {
+            setAuthError("An unexpected error occurred. Please try again later.");
+        } finally {
+            setIsAuthenticating(false);
+        }
     }
 
     const handleResendEmail = async () => {
@@ -254,7 +266,7 @@ const SignInPage = () => {
                     </div>
                 </div>
                 {authError && (
-                    <div className="error-message">
+                    <div className={`error-message ${authError.includes('successful') ? 'success' : ''}`}>
                         {authError}
                         {authError === 'Please confirm your email before logging in' && (
                             <button 

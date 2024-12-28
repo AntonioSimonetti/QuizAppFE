@@ -274,37 +274,42 @@ return (
               <div className="Line-two"></div>
             </div>
             
-            {status === 'loading' && <div>Loading...</div>}
+            {status === 'loading' && <div className="loading-your-quizzes">Loading...</div>}
             {error && <div>Error: {error}</div>}
             
             <div id="quizzes-container">
-              {quizzesToShow.map((quiz: Quiz) => (
-                <div 
-                  className="single-quiz-container" 
-                  key={quiz.id}
-                  onClick={() => handleQuizClick(quiz)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <div className="single-quiz-para"
-                  title={quiz.title}    
-                  >
-                    <p title={quiz.title}>{truncateTitle(quiz.title)}</p>
-                  </div>
-                  <div className="remove-icon" onClick={(e) => {
-                    e.stopPropagation();
-                    handleDelete(quiz.id);
-                  }}
-                    style={deletingQuizId === quiz.id ? blinkAnimation : {}}
-                  >
-                    <img src={removeIcon} className="icon" alt="remove icon" />
-                  </div>
-                  <div className="edit-icon">
-                    <img src={editIcon} className="icon" alt="edit icon" />
-                  </div>
+              {quizzesToShow.length === 0 ? (
+                <div className="no-quizzes-message">
+                  No quiz found, create your first quiz!
                 </div>
-              ))}
+              ) : (
+                quizzesToShow.map((quiz: Quiz) => (
+                  <div 
+                    className="single-quiz-container" 
+                    key={quiz.id}
+                    onClick={() => handleQuizClick(quiz)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <div className="single-quiz-para"
+                    title={quiz.title}    
+                    >
+                      <p title={quiz.title}>{truncateTitle(quiz.title)}</p>
+                    </div>
+                    <div className="remove-icon" onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(quiz.id);
+                    }}
+                      style={deletingQuizId === quiz.id ? blinkAnimation : {}}
+                    >
+                      <img src={removeIcon} className="icon" alt="remove icon" />
+                    </div>
+                    <div className="edit-icon">
+                      <img src={editIcon} className="icon" alt="edit icon" />
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
-
             <div className="pagination-buttons">
               <button onClick={previousPage} disabled={!hasPreviousPage}>
                 &lt;

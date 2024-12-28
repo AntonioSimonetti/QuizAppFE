@@ -318,6 +318,28 @@
     border-radius: 16px;
     margin-bottom: 104px;
     background: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55)); 
+    position: relative;
+    overflow: hidden;
+    color: #121211;
+    cursor: pointer;
+}
+
+.coming-soon-fourth {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInOut 2s ease-in-out;
+    border-radius: 16px;
+    inset: 0;
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+    font-size: 1.2em;
     color: #121211;
 }
 
@@ -369,4 +391,26 @@
     height: 53px;
     border-radius: 16px;
     background-color: #121211;
+}
+
+.coming-soon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInOut 2s ease-in-out;
+    background-color: #121211;
+    border-radius: 8px;
+    inset: 0;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
 }

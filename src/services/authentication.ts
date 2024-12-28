@@ -24,7 +24,6 @@ export const validateToken = async () => {
     return token;
 };
 
-
 export const checkEmailInUse = async (email: string) => {
     try {
         const response = await axiosInstance.post("/api/User/isEmailInUse", JSON.stringify(email), { // Non esiste questo endpoint lo devo scrivere
@@ -62,27 +61,8 @@ export const generateConfirmationLink = async(email:string) => {
 
 export const SignUp = async (dispatch: AppDispatch, credentials: Credentials) => {
     try {
-
         const { data } = await axiosInstance.post("/register", credentials);
-
-        // Da controllare se ho bisogno di passare tutti questi dati qui
-        localStorage.setItem("token", data.accessToken);
-
-        const email = credentials.email;
-        /*
-        const linkesponse = await generateConfirmationLink(email); // probabilmente non mi servirà
-        const emailConfirmationLink = linkesponse ? linkesponse : "";
-        */
-
-        const emailConfirmationLink = "";
-
-        // Probabilmente superfluo e rindondante perchè se la chiamata fallisce il dispatch non sarebbe mai partito e quindi non c'è bisogno di controllare la validità del token
-        // Se invece la chiamata viene effettuata con successo (e torna 200 ok()) il token è stato anche validato dal BE e quindi non c'è bisogno anche di questa ulteriore chiamata
-        // await validateToken(dispatch);
-
-        dispatch(userAuthenticated({... data, emailConfirmationLink, valid: true}));
-
-        return data; 
+        return { success: true, message: 'Registration successful! Please check your email to confirm your account.' };
     } catch (error: unknown) {
         if(axios.isAxiosError(error)){
             if (error.response?.data?.errors?.DuplicateUserName) {
@@ -93,51 +73,6 @@ export const SignUp = async (dispatch: AppDispatch, credentials: Credentials) =>
         return { error: 'An unexpected error occurred' };
     }
 }
-
-/*
-export const SignIn = async (dispatch: AppDispatch, credentials: Credentials) => {
-    try {
-        // Chiamata per il login
-        console.log('Starting login attempt with:', credentials.email);
-        const { data } = await axiosInstance.post("/login", credentials);
-        console.log("Login response data:", data);
-
-        const userDataResponse = await axiosInstance.get("/api/user/profile", {
-            headers: {
-                Authorization: `Bearer ${data.accessToken}`
-            }
-        });
-        console.log('User profile response:', userDataResponse.data);
-        console.log('Email confirmed status:', userDataResponse.data.emailConfirmed);
-
-        const { id, email, emailConfirmed  } = userDataResponse.data;
-
-        if (!id || !email) {
-            throw new Error("User data is incomplete or missing.");
-        }
-
-        if (!emailConfirmed) {
-            return { error: "EMAIL_NOT_CONFIRMED" };
-        }
-        
-        localStorage.setItem("token", data.accessToken);
-
-        // Probabilmente superfluo e rindondante perchè se la chiamata fallisce il dispatch non sarebbe mai partito e quindi non c'è bisogno di controllare la validità del token
-        // Se invece la chiamata viene effettuata con successo (e torna 200 ok()) il token è stato anche validato dal BE e quindi non c'è bisogno anche di questa ulteriore chiamata
-        //await validateToken(dispatch);
-
-        dispatch(userAuthenticated({...data, userId: id, email, valid: true}))
-
-        // Ritorna semplicemente data per la validazione di login
-        return data;
-    } catch (error) {
-        console.log('Login error:', error);
-        if (axios.isAxiosError(error) && error.response?.status === 401) {
-            return { error: 'Username or password incorrect' };
-        }
-        return { error: 'An unexpected error occurred' };
-    }
-};*/
 
 export const SignIn = async (dispatch: AppDispatch, credentials: Credentials) => {
     try {
@@ -173,7 +108,6 @@ export const SignIn = async (dispatch: AppDispatch, credentials: Credentials) =>
     }
 };
 
-
 export const resendConfirmationEmail = async (email: string) => {
     try {
         const response = await axiosInstance.post("/resendConfirmationEmail", { email });
@@ -201,7 +135,6 @@ export const forgotPassword = async (email: string) => {
         }
 };
 
-
 export const resetPassword = async (email: string, resetCode: string, newPassword: string) => {
     try {
     const response = await axiosInstance.post("/resetPassword", {
@@ -218,8 +151,6 @@ export const resetPassword = async (email: string, resetCode: string, newPasswor
     }
   }
 };
-
-
 
 // Non dovrebbe stare qui??
 export const logout = (dispatch: AppDispatch) => {

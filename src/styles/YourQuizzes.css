@@ -456,6 +456,25 @@ input[type="radio"]:hover {
   animation: textPulse 1.5s ease-in-out infinite;
 }
 
+.no-quizzes-message {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-size: 1.2em;
+}
+
+.loading-your-quizzes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  background-image: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+
 
 @keyframes sizeAndColorChange {
   0% {

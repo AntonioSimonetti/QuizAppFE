@@ -291,6 +291,26 @@
     color: #F5FE37;
 }
 
+.quiz-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    background-image: linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    height: 100vh;
+}
+
+.quiz-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
 @keyframes pulse {
     0% { opacity: 1; }
     50% { opacity: 0.5; }

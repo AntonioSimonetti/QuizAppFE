@@ -10,26 +10,11 @@ import { RootState } from './store/store';
 import { validateToken } from './services/authentication';
 
 
-
-
-
 function App() {
   const {isLoggedIn, isValidating } = useSelector((state:RootState) => state.authenticationSlice);
   const activeComponent = useSelector((state: RootState) => state.navigationSlice.activeComponent);
   const activeSubComponent = useSelector((state: RootState) => state.navigationSlice.activeSubComponent);
 
-  /*
-  useEffect(() => {
-    const navContainer = document.getElementById('nav-container');
-    const hasActiveClass = navContainer?.classList.contains('active-component');
-    console.log({
-      activeComponent,
-      activeSubComponent,
-      hasActiveClass,
-      'condition met': activeComponent === 'YourQuizzes' && activeSubComponent === 'QuizView'
-    });
-  }, [activeComponent, activeSubComponent]);
-  */
   const dispatch = useDispatch();
   
   useEffect(() => {
@@ -63,7 +48,18 @@ function App() {
 
 
   if (isValidating) {
-    return <div>Loading...</div>;
+    return <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      fontSize: '24px',
+      background: 'transparent',
+      backgroundImage: 'linear-gradient(to right, rgb(0, 255, 144), rgb(245, 254, 55))',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text'
+    }}>Loading...</div>;
   }
 
   return (

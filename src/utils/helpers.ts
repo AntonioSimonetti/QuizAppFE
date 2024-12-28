@@ -9,6 +9,19 @@ const truncateTitle = (title: string, maxLength: number = 20) => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 };
 
+export const validateEmail = (email: string): string | null => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    if (!email) {
+        return 'Email is required';
+    }
+    
+    if (!emailRegex.test(email)) {
+        return 'Please enter a valid email address';
+    }
+    
+    return null;
+};
 
 // Funzione di validazione per la password
 export const validatePassword = (password: string) => {

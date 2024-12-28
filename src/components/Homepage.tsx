@@ -26,6 +26,9 @@ const Homepage = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [shouldRenderNext, setShouldRenderNext] = useState(false);
   const activeComponent = useSelector((state: RootState) => state.navigationSlice.activeComponent);
+  const [showComingSoon, setShowComingSoon] = useState<string | null>(null);
+
+
 
   const handleSetActiveComponent = (component: string | null) => {
     setIsTransitioning(true);
@@ -44,6 +47,14 @@ const Homepage = () => {
         setShouldRenderNext(false);
     }
 }, [activeComponent]);
+
+const handlePlaceholderClick = (section: string) => {
+  setShowComingSoon(section);
+  setTimeout(() => {
+      setShowComingSoon(null);
+  }, 2000); // Show for 2 seconds
+};
+
 
   return (
     <>
@@ -78,21 +89,27 @@ const Homepage = () => {
           </div>
 
           <div className='Homepage-third-div'>
-            <div className='Social-div' id="Social-div">
+            <div className='Social-div' id="Social-div" onClick={() => handlePlaceholderClick('social')}>
               <div className='loghi-div'>
                 <img src={facebookLogo} className="icon" alt="Facebook Icon" />
                 <img src={redditLogo} className="icon" alt="Reddit Icon" />
                 <img src={linkedinLogo} className="icon" alt="Linkedin Icon" />
               </div>
               <p>Social</p>
+              {showComingSoon === 'social' && (
+                <div className="coming-soon">Coming Soon!</div>
+              )}
             </div>
-            <div className='Settings-div' id="Settings-div">
+            <div className='Settings-div' id="Settings-div" onClick={() => handlePlaceholderClick('settings')}>
               <img src={settingsIcon} className="icon" alt="Settings icon" />
               <p>Settings</p>
+              {showComingSoon === 'settings' && (
+                <div className="coming-soon">Coming Soon!</div>
+              )}
             </div>
           </div>
 
-          <div className='Homepage-fourth-div'>
+          <div className='Homepage-fourth-div' style={{ position: 'relative' }} onClick={() => handlePlaceholderClick('stats')}>
             <div className='container-icon'>
               <img src={fireIcon} className="icon" alt="Fire icon" />
               <div className='container-text-numeber'>
@@ -130,11 +147,14 @@ const Homepage = () => {
                 <div className='monday-placeholder' style={{ backgroundColor: "#808080" }}></div>
               </div>
             </div>
+            {showComingSoon === 'stats' && (
+              <div className="coming-soon-fourth">Coming Soon!</div>
+            )}
           </div>
         </div>
       )}
     </>
-  );
-};
+);
+}
 
 export default Homepage;
