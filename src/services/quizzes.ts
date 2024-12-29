@@ -244,5 +244,104 @@ export const fetchQuizDetails = async (quizId: number, token: string) => {
   }
 };
 
+export const updateQuizBasicInfo = async (
+  quizId: number, 
+  updateData: {
+      id: number,
+      title: string,
+      isPublic: boolean,
+      timelimit: number,
+      userId: string
+  }, 
+  token: string,
+  dispatch: AppDispatch
+) => {
+  try {
+      await axios.put(
+          `https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/UpdateQuiz/${quizId}`,
+          updateData,
+          {
+              headers: {
+                  Authorization: `Bearer ${token}`,
+                  'Content-Type': 'application/json'
+              }
+          }
+      );
+
+      // Refresh the quizzes list after update
+      await fetchQuizzesByUserId(updateData.userId, token, dispatch);
+  } catch (error) {
+      console.error('Update Quiz Error:', error);
+      throw error;
+  }
+};
 
 
+export const removeQuestionFromQuiz = async (quizId: number, questionId: number, token: string) => {
+  try {
+      await axios.delete(
+          `https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/${quizId}/RemoveQuestion/${questionId}`,
+          {
+              headers: {
+                  Authorization: `Bearer ${token}`,
+              }
+          }
+      );
+  } catch (error) {
+      console.error('Remove Question Error:', error);
+      throw error;
+  }
+};
+
+export const updateQuestion = async (
+  questionId: number, 
+  questionData: {
+      id: number,
+      text: string,
+      correctAnswerIndex: number,
+      points: number,
+      negativePoints: number,
+      userId: string
+  }, 
+  token: string
+) => {
+  try {
+      await axios.put(
+          `https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/UpdateQuestion/${questionId}`,
+          questionData,
+          {
+              headers: {
+                  Authorization: `Bearer ${token}`,
+              }
+          }
+      );
+  } catch (error) {
+      console.error('Update Question Error:', error);
+      throw error;
+  }
+};
+
+export const updateOption = async (
+  optionId: number,
+  optionData: {
+      id: number,
+      text: string,
+      questionId: number
+  },
+  token: string
+) => {
+  try {
+      await axios.put(
+          `https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/UpdateOption/${optionId}`,
+          optionData,
+          {
+              headers: {
+                  Authorization: `Bearer ${token}`,
+              }
+          }
+      );
+  } catch (error) {
+      console.error('Update Option Error:', error);
+      throw error;
+  }
+};

@@ -55,3 +55,47 @@ export const validateConfirmPassword = (password: string, confirmPassword: strin
   }
   return null;
 };
+
+export const validateQuizTitle = (title: string): { isValid: boolean; error: string } => {
+    if (!title.trim()) {
+        return { isValid: false, error: 'Title is required' };
+    }
+    if (title.length < 3) {
+        return { isValid: false, error: 'Title must be at least 3 characters long' };
+    }
+    if (title.length > 50) {
+        return { isValid: false, error: 'Title must be less than 50 characters' };
+    }
+    return { isValid: true, error: '' };
+};
+
+export const validateQuestionForm = (
+    question: string,
+    options: string[],
+    correctOption: number
+): { isValid: boolean; errors: { [key: string]: string } } => {
+    const errors: { [key: string]: string } = {};
+    
+    // Validate question text
+    if (!question.trim()) {
+        errors.question = 'Question text is required';
+    } else if (question.length < 10) {
+        errors.question = 'Question must be at least 10 characters long';
+    }
+
+    // Validate options
+    const filledOptions = options.filter(opt => opt.trim() !== '');
+    if (filledOptions.length < 4) {
+        errors.options = 'All options are required';
+    }
+
+    // Validate correct option selection
+    if (correctOption === -1) {
+        errors.correctOption = 'Please select the correct answer';
+    }
+
+    return {
+        isValid: Object.keys(errors).length === 0,
+        errors
+    };
+};

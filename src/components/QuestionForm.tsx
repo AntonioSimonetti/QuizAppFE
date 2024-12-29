@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import QuestionFormProps from "../interfaces/quiz"; 
+import { validateQuestionForm } from "../utils/helpers";
+import '../styles/QuestionForm.css';
 
 export const QuestionForm = ({
     currentQuestion,
@@ -7,16 +10,54 @@ export const QuestionForm = ({
     onFinishQuiz,
     onCancel
 }: QuestionFormProps) => {
+    const [errorMessage, setErrorMessage] = useState<string>('');
+
+    const validateAndSubmit = (action: 'add' | 'finish') => {
+        if (action === 'finish' && 
+            !currentQuestion.text && 
+            currentQuestion.options.every(opt => !opt) && 
+            currentQuestion.correctOption === -1) {
+            onFinishQuiz();
+            return;
+        }
+
+        const validation = validateQuestionForm(
+            currentQuestion.text,
+            currentQuestion.options,
+            currentQuestion.correctOption
+        );
+
+        if (!validation.isValid) {
+            const firstError = Object.values(validation.errors)[0];
+            setErrorMessage(firstError);
+            return;
+        }
+
+        setErrorMessage('');
+        if (action === 'add') {
+            onAddQuestion();
+        } else {
+            onFinishQuiz();
+        }
+    };
+
+    const handleQuestionChange = (newQuestion: typeof currentQuestion) => {
+        setErrorMessage('');
+        onQuestionChange(newQuestion);
+    };
+
     return (
         <div className="questions-form">
             <h2>Add a Question:</h2>
+            
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
             
             <div className="form-group">
                 <input
                     type="text"
                     id="questionText"
                     value={currentQuestion.text}
-                    onChange={(e) => onQuestionChange({
+                    onChange={(e) => handleQuestionChange({
                         ...currentQuestion,
                         text: e.target.value
                     })}
@@ -38,7 +79,7 @@ export const QuestionForm = ({
                                     onChange={(e) => {
                                         const newOptions = [...currentQuestion.options];
                                         newOptions[index] = e.target.value;
-                                        onQuestionChange({
+                                        handleQuestionChange({
                                             ...currentQuestion,
                                             options: newOptions
                                         });
@@ -47,12 +88,11 @@ export const QuestionForm = ({
                                     autoComplete="off"
                                     className="option-input"
                                 />
-                                
                                 <input
                                     type="radio"
                                     name="correctOption"
                                     checked={currentQuestion.correctOption === index}
-                                    onChange={() => onQuestionChange({
+                                    onChange={() => handleQuestionChange({
                                         ...currentQuestion,
                                         correctOption: index
                                     })}
@@ -73,7 +113,7 @@ export const QuestionForm = ({
                                     onChange={(e) => {
                                         const newOptions = [...currentQuestion.options];
                                         newOptions[index + 2] = e.target.value;
-                                        onQuestionChange({
+                                        handleQuestionChange({
                                             ...currentQuestion,
                                             options: newOptions
                                         });
@@ -86,7 +126,7 @@ export const QuestionForm = ({
                                     type="radio"
                                     name="correctOption"
                                     checked={currentQuestion.correctOption === index + 2}
-                                    onChange={() => onQuestionChange({
+                                    onChange={() => handleQuestionChange({
                                         ...currentQuestion,
                                         correctOption: index + 2
                                     })}
@@ -101,15 +141,14 @@ export const QuestionForm = ({
                 <button type="button" className="cancel-btn" onClick={onCancel}>Cancel</button>
                 <button 
                     type="button" 
-                    onClick={onAddQuestion}
+                    onClick={() => validateAndSubmit('add')}
                     className="add-question-btn"
-                    disabled={!currentQuestion.text || currentQuestion.options.some(opt => !opt) || currentQuestion.correctOption === -1}
                 >
                     Add Another Question
                 </button>
                 <button 
                     type="button" 
-                    onClick={onFinishQuiz}
+                    onClick={() => validateAndSubmit('finish')}
                     className="finish-btn"
                 >
                     Finish Quiz

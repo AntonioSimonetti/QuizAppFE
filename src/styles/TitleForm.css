@@ -30,3 +30,19 @@
     left: 3px;
     top: -1px;
 }
+
+
+.error-message-title-form {
+    color: #E24F46;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.error-input {
+    border-color: #E24F46;
+}
+
+.error-input:focus {
+    outline-color: #E24F46;
+}

@@ -29,6 +29,7 @@ import { Quiz, LocalQuizState, initialQuizState } from '../interfaces/quiz';
 // Custom Hooks
 import { useQuizValidation } from "../hooks/useQuizValidation";
 import { useQuizPagination } from "../hooks/useQuizPagination";
+import { EditQuiz } from "./EditQuiz";
 
 const YourQuizzes = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,6 +42,8 @@ const YourQuizzes = () => {
   const [localQuizState, setLocalQuizState] = useState<LocalQuizState>(initialQuizState); // stato per salvare localmente il quiz creato dall'utente
   const [currentQuestion, setCurrentQuestion] = useState({ text: '',options: ['', '', '', ''], correctOption: -1}); // stato per salvare la domanda corrente create dall'user
   const [isCreatingQuiz, setIsCreatingQuiz] = useState(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
 
 
   // Selettori per lo stato globale
@@ -216,6 +219,12 @@ const YourQuizzes = () => {
       }
     }));
   };
+
+  const handleEdit = (quiz: Quiz, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedQuiz(quiz);
+    setIsEditing(true);
+};
   
 
 return (
@@ -262,6 +271,14 @@ return (
               )}
             </div>
           </div>
+        ) : isEditing && selectedQuiz ? (
+          <EditQuiz 
+              quiz={selectedQuiz}
+              onBack={() => {
+                  setIsEditing(false);
+                  setSelectedQuiz(null);
+              }}
+          />
         ) : selectedQuiz ? (
           <QuizView 
             quiz={selectedQuiz} 
@@ -303,8 +320,8 @@ return (
                     >
                       <img src={removeIcon} className="icon" alt="remove icon" />
                     </div>
-                    <div className="edit-icon">
-                      <img src={editIcon} className="icon" alt="edit icon" />
+                    <div className="edit-icon" onClick={(e) => handleEdit(quiz, e)}>
+                        <img src={editIcon} className="icon" alt="edit icon" />
                     </div>
                   </div>
                 ))

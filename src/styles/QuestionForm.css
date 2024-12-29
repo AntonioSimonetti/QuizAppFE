@@ -1,0 +1,38 @@
+.form-buttons button {
+    transform: translateY(0);
+    transition: transform 0.2s ease;
+}
+
+.form-buttons button:active {
+    transform: translateY(4px);
+}
+
+@media screen and (max-width: 768px) {
+    .modal-content {
+        width: 70%;
+        margin: 0 auto;
+    }
+
+
+    .options-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .column {
+        width: 100%;
+    }
+
+    .option-group {
+        margin-bottom: 1rem;
+    }
+
+    .option-input-group {
+        width: 100%;
+    }
+
+    .option-input {
+        width: calc(100% - 30px);
+    }
+
+}

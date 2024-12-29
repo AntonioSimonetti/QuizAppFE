@@ -1,4 +1,6 @@
 import "../styles/TitleForm.css";
+import { useState } from 'react';
+import { validateQuizTitle } from "../utils/helpers";
 
 
 interface TitleFormProps {
@@ -10,8 +12,29 @@ interface TitleFormProps {
     onTogglePublic: (isPublic: boolean) => void;
   }
   
-  export const TitleForm = ({ title, onTitleChange, onSubmit, onCancel, isPublic, onTogglePublic }: TitleFormProps) => (
-    <form onSubmit={onSubmit} className="quiz-form">
+  export const TitleForm = ({ title, onTitleChange, onSubmit, onCancel, isPublic, onTogglePublic }: TitleFormProps) => {
+    const [errorMessage, setErrorMessage] = useState<string>('');
+  
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      const validation = validateQuizTitle(title);
+      
+      if (!validation.isValid) {
+          setErrorMessage(validation.error);
+          return;
+      }
+      
+      setErrorMessage('');
+      onSubmit(e);
+  }
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorMessage('');
+    onTitleChange(e);
+};
+  
+  return (
+    <form onSubmit={handleSubmit} className="quiz-form">
       <div id="header-new-quiz-div">
         <h1 id="HeaderNewQuiz">Create Quiz</h1>
         <div className="Line-two"></div>
@@ -22,10 +45,11 @@ interface TitleFormProps {
           type="text"
           id="quizTitle"
           value={title}
-          onChange={onTitleChange}
+          onChange={handleTitleChange}
           placeholder="Enter quiz title"
           required
         />
+        {errorMessage && <span className="error-message-title-form">{errorMessage}</span>}
         <div className="checkbox-container">
           <label htmlFor="publicQuiz">Public Quiz</label>
           <input 
@@ -43,4 +67,5 @@ interface TitleFormProps {
       </div>
     </form>
   );
+}
   

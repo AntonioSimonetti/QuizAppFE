@@ -135,7 +135,7 @@
     padding: 2rem;
 }
   
-  .option-button:not(:disabled):hover .option-div {
+.option-button:not(:disabled):hover .option-div {
     background-color: #F5FE37;
     color: #121211;
 }
@@ -181,8 +181,6 @@
     opacity: 0.5;
     cursor: default;
 }
-
-/* Add these new styles at the end of your existing CSS */
 
 /* Tooltip styles */
 #HeaderNewQuiz {
