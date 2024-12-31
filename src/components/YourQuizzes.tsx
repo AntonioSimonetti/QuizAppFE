@@ -67,6 +67,212 @@ const YourQuizzes = () => {
   
     fetchQuizzesByUserId(userId, token, dispatch);
   }, [token, userId, dispatch]);
+
+  // Mock di dati provvisorio per test
+  /*
+  useEffect(() => {
+    const mockQuizzes = [
+      {
+        id: 1,
+        title: "JavaScript Fundamentals",
+        isPublic: true,
+        timeLimit: "00:30:00",
+        userId: "test-123",
+        questions: [
+          {
+            id: 1,
+            text: "What is JavaScript?",
+            options: [
+              { id: 1, text: "A programming language", isCorrect: true },
+              { id: 2, text: "A markup language", isCorrect: false },
+              { id: 3, text: "A database system", isCorrect: false },
+              { id: 4, text: "An operating system", isCorrect: false }
+            ]
+          },
+          {
+            id: 2,
+            text: "What is the typeof operator used for?",
+            options: [
+              { id: 1, text: "To check file type", isCorrect: false },
+              { id: 2, text: "To determine variable type", isCorrect: true },
+              { id: 3, text: "To create new types", isCorrect: false },
+              { id: 4, text: "To convert types", isCorrect: false }
+            ]
+          },
+          {
+            id: 3,
+            text: "What is closure in JavaScript?",
+            options: [
+              { id: 1, text: "A way to close browser", isCorrect: false },
+              { id: 2, text: "A database connection", isCorrect: false },
+              { id: 3, text: "A function with access to outer scope", isCorrect: true },
+              { id: 4, text: "A way to end loops", isCorrect: false }
+            ]
+          },
+          {
+            id: 4,
+            text: "What is the DOM?",
+            options: [
+              { id: 1, text: "Data Object Model", isCorrect: false },
+              { id: 2, text: "Document Object Model", isCorrect: true },
+              { id: 3, text: "Digital Ordinance Model", isCorrect: false },
+              { id: 4, text: "Document Order Model", isCorrect: false }
+            ]
+          },
+          {
+            id: 5,
+            text: "What is event bubbling?",
+            options: [
+              { id: 1, text: "A way to create events", isCorrect: false },
+              { id: 2, text: "Event propagation from child to parent", isCorrect: true },
+              { id: 3, text: "Creating multiple events", isCorrect: false },
+              { id: 4, text: "Deleting events", isCorrect: false }
+            ]
+          },
+          {
+            id: 6,
+            text: "What is a Promise?",
+            options: [
+              { id: 1, text: "A guarantee in code", isCorrect: false },
+              { id: 2, text: "A type of function", isCorrect: false },
+              { id: 3, text: "An object representing future completion", isCorrect: true },
+              { id: 4, text: "A way to promise variables", isCorrect: false }
+            ]
+          },
+          {
+            id: 7,
+            text: "What is async/await?",
+            options: [
+              { id: 1, text: "A way to handle promises", isCorrect: true },
+              { id: 2, text: "A type of loop", isCorrect: false },
+              { id: 3, text: "A variable declaration", isCorrect: false },
+              { id: 4, text: "A math operation", isCorrect: false }
+            ]
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "React Fundamentals",
+        isPublic: false,
+        timeLimit: "00:15:00",
+        userId: "test-123",
+        questions: [
+          {
+            id: 1,
+            text: "What is React?",
+            options: [
+              { id: 1, text: "A JavaScript library", isCorrect: true },
+              { id: 2, text: "A database", isCorrect: false },
+              { id: 3, text: "A programming language", isCorrect: false },
+              { id: 4, text: "An operating system", isCorrect: false }
+            ]
+          }
+        ]
+      },
+      {
+        id: 3,
+        title: "TypeScript Advanced Concepts",
+        isPublic: true,
+        timeLimit: "01:00:00",
+        userId: "test-123",
+        questions: [
+          {
+            id: 1,
+            text: "What are Generics?",
+            options: [
+              { id: 1, text: "Type-safe containers", isCorrect: true },
+              { id: 2, text: "General variables", isCorrect: false },
+              { id: 3, text: "Global functions", isCorrect: false },
+              { id: 4, text: "Generic names", isCorrect: false }
+            ]
+          }
+        ]
+      },
+      {
+        id: 4,
+        title: "Redux State Management",
+        isPublic: true,
+        timeLimit: "00:45:00",
+        userId: "test-123",
+        questions: [
+          {
+            id: 1,
+            text: "What is Redux?",
+            options: [
+              { id: 1, text: "State management library", isCorrect: true },
+              { id: 2, text: "Database", isCorrect: false },
+              { id: 3, text: "Framework", isCorrect: false },
+              { id: 4, text: "Programming language", isCorrect: false }
+            ]
+          }
+        ]
+      },
+      {
+        id: 5,
+        title: "Node.js Basics",
+        isPublic: false,
+        timeLimit: "00:20:00",
+        userId: "test-123",
+        questions: [
+          {
+            id: 1,
+            text: "What is Node.js?",
+            options: [
+              { id: 1, text: "JavaScript runtime", isCorrect: true },
+              { id: 2, text: "Web browser", isCorrect: false },
+              { id: 3, text: "Programming language", isCorrect: false },
+              { id: 4, text: "Database system", isCorrect: false }
+            ]
+          }
+        ]
+      },
+      {
+        id: 6,
+        title: "Git Version Control",
+        isPublic: true,
+        timeLimit: "00:35:00",
+        userId: "test-123",
+        questions: [
+          {
+            id: 1,
+            text: "What is Git?",
+            options: [
+              { id: 1, text: "Version control system", isCorrect: true },
+              { id: 2, text: "Programming language", isCorrect: false },
+              { id: 3, text: "Database", isCorrect: false },
+              { id: 4, text: "Web framework", isCorrect: false }
+            ]
+          }
+        ]
+      },
+      {
+        id: 7,
+        title: "CSS Advanced Styling",
+        isPublic: true,
+        timeLimit: "00:25:00",
+        userId: "test-123",
+        questions: [
+          {
+            id: 1,
+            text: "What is Flexbox?",
+            options: [
+              { id: 1, text: "Layout model", isCorrect: true },
+              { id: 2, text: "JavaScript library", isCorrect: false },
+              { id: 3, text: "HTML element", isCorrect: false },
+              { id: 4, text: "CSS preprocessor", isCorrect: false }
+            ]
+          }
+        ]
+      }
+    ];
+  
+    dispatch({ 
+      type: 'quizzes/setQuizzes',
+      payload: mockQuizzes
+    });
+  }, [dispatch]);
+  */
   
   // ----  FUNZIONI ---- //
 

@@ -51,6 +51,7 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
+    margin-top: -5px !important;
     accent-color: rgb(0, 255, 144);
 }
 
@@ -173,4 +174,61 @@ button:hover:not(:disabled) {
 .page-info {
     color: rgb(0, 255, 144);
     font-weight: bold;
+}
+
+.edit-quiz-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+/* Make form inputs and containers responsive */
+.form-group input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.question-item {
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+    .question-item {
+        flex-direction: row;
+    }
+}
+
+.question-preview {
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.question-text {
+    max-width: 100%;
+}
+
+.question-actions {
+    width: 100%;
+    justify-content: flex-start;
+}
+
+@media screen and (min-width: 768px) {
+    .question-actions {
+        width: auto;
+    }
+}
+
+.form-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+@media screen and (min-width: 768px) {
+    .form-buttons {
+        flex-direction: row;
+    }
 }

@@ -49,6 +49,130 @@ const QuizView = ({ quiz, onBack }: QuizViewProps) => {
 
     loadQuizDetails();
   }, [quiz.id, token]);
+  
+  useEffect(() => {
+    const loadQuizDetails = async () => {
+      const details = await fetchQuizDetails(quiz.id, token);
+      setQuizDetails(details);
+    };
+    loadQuizDetails();
+  }, [quiz.id, token]);
+
+
+// Mock data per test
+/*
+useEffect(() => {
+  const mockQuizDetails = {
+    id: quiz.id,
+    title: quiz.title,
+    quizQuestions: {
+      $values: [
+        {
+          question: {
+            text: "What is JavaScript?",
+            correctAnswerIndex: 0,
+            options: {
+              $values: [
+                { text: "A programming language" },
+                { text: "A markup language" },
+                { text: "A database system" },
+                { text: "An operating system" }
+              ]
+            }
+          }
+        },
+        {
+          question: {
+            text: "What is the typeof operator used for?",
+            correctAnswerIndex: 1,
+            options: {
+              $values: [
+                { text: "To check file type" },
+                { text: "To determine variable type" },
+                { text: "To create new types" },
+                { text: "To convert types" }
+              ]
+            }
+          }
+        },
+        {
+          question: {
+            text: "What is closure in JavaScript?",
+            correctAnswerIndex: 2,
+            options: {
+              $values: [
+                { text: "A way to close browser" },
+                { text: "A database connection" },
+                { text: "A function with access to outer scope" },
+                { text: "A way to end loops" }
+              ]
+            }
+          }
+        },
+        {
+          question: {
+            text: "What is the DOM?",
+            correctAnswerIndex: 1,
+            options: {
+              $values: [
+                { text: "Data Object Model" },
+                { text: "Document Object Model" },
+                { text: "Digital Ordinance Model" },
+                { text: "Document Order Model" }
+              ]
+            }
+          }
+        },
+        {
+          question: {
+            text: "What is event bubbling?",
+            correctAnswerIndex: 1,
+            options: {
+              $values: [
+                { text: "A way to create events" },
+                { text: "Event propagation from child to parent" },
+                { text: "Creating multiple events" },
+                { text: "Deleting events" }
+              ]
+            }
+          }
+        },
+        {
+          question: {
+            text: "What is a Promise?",
+            correctAnswerIndex: 2,
+            options: {
+              $values: [
+                { text: "A guarantee in code" },
+                { text: "A type of function" },
+                { text: "An object representing future completion" },
+                { text: "A way to promise variables" }
+              ]
+            }
+          }
+        },
+        {
+          question: {
+            text: "What is async/await?",
+            correctAnswerIndex: 0,
+            options: {
+              $values: [
+                { text: "A way to handle promises" },
+                { text: "A type of loop" },
+                { text: "A variable declaration" },
+                { text: "A math operation" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  };
+
+  setQuizDetails(mockQuizDetails);
+}, [quiz]);
+*/
+
 
   // Si occupa di tenere traccia delle risposte dell'user durante il quiz
   const handleAnswerSelect = (optionIndex: number) => {

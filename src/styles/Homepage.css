@@ -408,6 +408,25 @@
     inset: 0;
 }
 
+.coming-soon-stats {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInOut 2s ease-in-out;
+    border-radius: 16px;
+    inset: 0;
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #E24F46;
+}
+
 @keyframes fadeInOut {
     0% { opacity: 0; }
     20% { opacity: 1; }

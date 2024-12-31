@@ -82,9 +82,12 @@ const handlePlaceholderClick = (section: string) => {
               <img src={publicQuizzesLogo} className="icon" alt="Public Quizzes logo" />
               <p>Public Quizzes</p>
             </div>
-            <div className='Statistics-div' id='Statistics-div' onClick={() => handleSetActiveComponent("Statistics")}>
-              <img src={statisticsLogo} className="icon" alt="Statistics logo" />
-              <p>Statistics</p>
+            <div className='Statistics-div' id='Statistics-div' onClick={() => handlePlaceholderClick("statistics")}>
+                <img src={statisticsLogo} className="icon" alt="Statistics logo" />
+                <p>Statistics</p>
+                {showComingSoon === 'statistics' && (
+                    <div className="coming-soon-stats">Coming Soon!</div>
+                )}
             </div>
           </div>
 

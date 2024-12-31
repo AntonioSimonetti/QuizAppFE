@@ -49,6 +49,7 @@
 .error-message {
     color: red;
     font-size: 14px;
+    width: auto;
 }
 
 /* Sezione per il reset della password */

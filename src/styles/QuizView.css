@@ -204,7 +204,6 @@
 
 .expand-hint {
     position: absolute;
-    left: 50%;
     transform: translateX(-50%);
     font-size: 12px;
     margin-top: 3.2rem;

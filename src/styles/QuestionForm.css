@@ -7,10 +7,16 @@
     transform: translateY(4px);
 }
 
+
+/* SOLO PER QUESTO MEDIA QUERY*/
 @media screen and (max-width: 768px) {
-    .modal-content {
+    .modal-content {      
         width: 70%;
         margin: 0 auto;
+    }
+
+    .questions-form > h2 {
+        font-size: 16px !important;
     }
 
 
@@ -24,7 +30,12 @@
     }
 
     .option-group {
-        margin-bottom: 1rem;
+        margin-top: -1rem !important;
+        margin-bottom: 0rem;
+    }
+
+    .option-group > label {
+        font-size: 12px !important;
     }
 
     .option-input-group {

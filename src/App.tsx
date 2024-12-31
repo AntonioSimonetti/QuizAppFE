@@ -16,7 +16,7 @@ function App() {
   const activeSubComponent = useSelector((state: RootState) => state.navigationSlice.activeSubComponent);
 
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     const token = localStorage.getItem("token");
   
@@ -46,6 +46,24 @@ function App() {
       });
   }, [dispatch]);
 
+  useEffect(() => {
+    console.log('Active Component:', activeComponent);
+    console.log('Active SubComponent:', activeSubComponent);
+  }, [activeComponent, activeSubComponent]);
+
+  /* mock data for testing purpose
+  useEffect(() => {
+    const mockAuthData = {
+      userId: "test-123",
+      accessToken: "mock-token-123",
+      valid: true,
+      usernameAndEmail: "test@example.com"
+    };
+  
+    dispatch(userAuthenticated(mockAuthData));
+    localStorage.setItem("token", mockAuthData.accessToken);
+  }, [dispatch]);
+  */
 
   if (isValidating) {
     return <div style={{
@@ -62,6 +80,7 @@ function App() {
     }}>Loading...</div>;
   }
 
+  
   return (
     <Router>
       <div className="app-container">
@@ -73,12 +92,18 @@ function App() {
           </Routes>
         </div>
         {isLoggedIn && <div id='nav-container'
-          className={activeComponent === 'YourQuizzes' && activeSubComponent === 'QuizView' ? 'active-component' : ''}
+              className={
+                (activeComponent === 'YourQuizzes' && (activeSubComponent === 'QuizView' || activeSubComponent === 'QuestionsList')) ||
+                (activeComponent === 'PublicQuizzes' && activeSubComponent === 'QuizView')
+                ? 'active-component' 
+                : ''
+              }
           ><Navbar /></div>}
       </div>
     </Router>
 );
-  
+
+
 
 }
 
