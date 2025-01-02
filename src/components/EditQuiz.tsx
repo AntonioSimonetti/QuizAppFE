@@ -203,6 +203,7 @@ export const EditQuiz = ({ quiz, onBack }: EditQuizProps) => {
                 token,
                 dispatch
             );
+            onBack();
         } catch (error) {
             console.error('Failed to update quiz:', error);
         } finally {
