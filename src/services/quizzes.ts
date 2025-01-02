@@ -1,6 +1,6 @@
 import axios from "axios";
-import { AppDispatch } from '../store/store';
-import { setQuizzes } from '../store/quizzesSlice';
+import store, { AppDispatch } from '../store/store';
+import { deleteQuiz, setQuizzes } from '../store/quizzesSlice';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { LocalQuizState } from '../interfaces/quiz'; 
 
@@ -47,7 +47,14 @@ export const fetchPublicQuizzes = async (token: string) => {
 
 
 export const deleteQuizById = async (userId: string, quizId: number, token: string, dispatch: AppDispatch) => {
+  // Salviamo lo stato corrente dei quiz prima della cancellazione
+  const currentQuizzes = store.getState().quizzesSlice.data.quizzes;
+
   try {
+    // Aggiorniamo subito l'UI (optimistic update)
+    dispatch(deleteQuiz(quizId));
+
+    // Proviamo la chiamata API
     await axios.delete(
       `https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/DeleteQuizById/${quizId}`,
       {
@@ -57,14 +64,15 @@ export const deleteQuizById = async (userId: string, quizId: number, token: stri
       }
     );
     
-    if (userId) {
-      await fetchQuizzesByUserId(userId, token, dispatch);
-    }
   } catch (error) {
+    // Se la chiamata fallisce, ripristiniamo lo stato precedente
+    dispatch(setQuizzes(currentQuizzes));
     console.error('Delete Quiz Error:', error);
     throw error;
   }
 };
+
+
 
 /*
  * Creates a complete quiz with questions and options using multiple API calls.

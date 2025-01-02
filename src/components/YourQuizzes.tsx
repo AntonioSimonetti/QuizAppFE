@@ -280,13 +280,21 @@ const YourQuizzes = () => {
   const handleDelete = async (quizId: number) => {
     try {
       setDeletingQuizId(quizId);
-      await deleteQuizById(userId,quizId, token, dispatch);
+
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      await deleteQuizById(userId, quizId, token, dispatch);
+      
+      // If the deleted quiz was selected, clear the selection
+      if (selectedQuiz?.id === quizId) {
+        setSelectedQuiz(null);
+      }
     } catch (error) {
       console.error('Failed to delete quiz:', error);
     } finally {
       setDeletingQuizId(null);
     }
   }
+  
 
   // Fn toggle del modale
   const toggleModal = () => {

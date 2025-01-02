@@ -9,6 +9,9 @@ export const quizzesSlice = createSlice({
     setQuizzes(state, action) {
       state.data.quizzes = action.payload;
     },
+    deleteQuiz(state, action) {
+      state.data.quizzes = state.data.quizzes.filter(quiz => quiz.id !== action.payload);
+    },
     setQuestions(state, action) {
       action.payload.forEach((question: Question) => {
         state.data.questions[question.id] = question;
@@ -33,6 +36,7 @@ export const quizzesSlice = createSlice({
 
 export const {
   setQuizzes,
+  deleteQuiz, 
   setQuestions,
   setOptions,
   setStatus,
