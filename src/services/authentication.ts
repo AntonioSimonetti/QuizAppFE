@@ -77,7 +77,6 @@ export const SignUp = async (dispatch: AppDispatch, credentials: Credentials) =>
 export const SignIn = async (dispatch: AppDispatch, credentials: Credentials) => {
     try {
         const { data } = await axiosInstance.post("/login", credentials);
-        console.log("Login response data:", data);
 
         const isEmailConfirmed = await checkEmailConfirmation(data.accessToken);
         if (!isEmailConfirmed) {

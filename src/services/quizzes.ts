@@ -19,7 +19,6 @@ export const fetchQuizzesByUserId = async (userId: string, token: string, dispat
         },
       }
     );
-    console.log('API Response:', response.data);
     const quizzes = response.data.$values;
     dispatch(setQuizzes(quizzes));
     return quizzes;
@@ -84,14 +83,9 @@ export const createCompleteQuiz = createAsyncThunk(
   }) => {
     try {
       const currentQuiz = quizData.quizzes[quizData.currentQuizId];
-      console.log('Current Quiz Data:', currentQuiz);
 
       // 1. Create the quiz
-      console.log('Creating quiz with data:', {
-        title: currentQuiz.title,
-        userId: userId
-      });
-      
+
       const quizResponse = await axios.post(
         'https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/CreateQuiz',
         {
@@ -109,16 +103,13 @@ export const createCompleteQuiz = createAsyncThunk(
         }
       );
 
-      console.log('Quiz created successfully:', quizResponse.data);
       const quizId = quizResponse.data.id;
 
       // 2. Create questions and their options
       for (const [questionId, question] of Object.entries(currentQuiz.questions)) {
-        console.log('Creating question:', question);
         
         const correctAnswerIndex = Object.entries(question.options)
           .findIndex(([_, option]) => option.isCorrect);
-        console.log('Correct answer index:', correctAnswerIndex);
 
         const questionResponse = await axios.post(
           'https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/CreateQuestion',
@@ -138,14 +129,9 @@ export const createCompleteQuiz = createAsyncThunk(
           }
         );
 
-        console.log('Question created successfully:', questionResponse.data);
         const questionId = questionResponse.data.id;
 
-        // Link question to quiz
-        console.log('Linking question to quiz:', {
-          questionData: questionResponse.data,
-          quizId: quizId
-        });
+   
 
         await axios.post(
           `https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/AddQuestionToQuiz?quizId=${quizId}`,
@@ -160,7 +146,6 @@ export const createCompleteQuiz = createAsyncThunk(
 
         // Create and link options
         for (const [optionId, option] of Object.entries(question.options)) {
-          console.log('Creating option:', option);
           
           const optionResponse = await axios.post(
             'https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/CreateOption',
@@ -177,12 +162,7 @@ export const createCompleteQuiz = createAsyncThunk(
             }
           );
 
-          console.log('Option created successfully:', optionResponse.data);
 
-          console.log('Linking option to question:', {
-            optionData: optionResponse.data,
-            questionId: questionId
-          });
 
           await axios.post(
             `https://quizappbe-cjavc5btahfscyd9.eastus-01.azurewebsites.net/api/Quiz/AddOptionToQuestion?questionId=${questionId}`,
@@ -236,7 +216,6 @@ export const fetchQuizDetails = async (quizId: number, token: string) => {
       questionData.question.options = optionsResponse.data;
     }
     
-    console.log('Complete quiz with options:', quiz);
     return quiz;
   } catch (error) {
     console.error('Failed to fetch quiz details:', error);

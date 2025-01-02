@@ -32,7 +32,6 @@ const PublicQuizzes = () => {
       setLoading(true);
       fetchPublicQuizzes(token)
         .then((data) => {
-          console.log('Dati ricevuti dalla API:', data);
           setQuizzes(data); // Salviamo i quiz nello stato locale
           setLoading(false);
         })
@@ -48,7 +47,6 @@ const PublicQuizzes = () => {
 
   // Funzione per selezionare un quiz da visualizzare
   const handleQuizClick = (quiz: Quiz) => {
-    console.log('Quiz selezionato:', quiz);
     setSelectedQuiz(quiz);
   };
 

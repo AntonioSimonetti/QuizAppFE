@@ -46,11 +46,6 @@ function App() {
       });
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log('Active Component:', activeComponent);
-    console.log('Active SubComponent:', activeSubComponent);
-  }, [activeComponent, activeSubComponent]);
-
   /* mock data for testing purpose
   useEffect(() => {
     const mockAuthData = {
