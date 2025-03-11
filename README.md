@@ -12,7 +12,7 @@ Backend Repository
 
 You can visit the backend repository for this project here: https://github.com/AntonioSimonetti/QuizAppBE
 
-Demo
+<b>Demo</b>
 
 You can test the live application here: https://quizappfe-dmhrdjdxhmdfabgf.eastus-01.azurewebsites.net/
 
