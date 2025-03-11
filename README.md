@@ -1,8 +1,8 @@
-Quiz App Frontend
+#Quiz App Frontend
 
 This is the frontend repository for the Quiz application. The app was created as an exercise to practice developing full-stack applications and to explore new technologies. It is built using TypeScript, React, and Redux to ensure a modern, responsive, and scalable user interface. The frontend integrates seamlessly with the backend, providing users with an intuitive experience for managing and participating in quizzes.
 
-Features
+#Features
 
 TypeScript & React: Developed with modern technologies to ensure robust, maintainable, and high-performance code.
 Redux: Centralized state management for better data synchronization across various components.
